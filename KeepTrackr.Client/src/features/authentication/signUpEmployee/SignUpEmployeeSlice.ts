@@ -3,12 +3,12 @@ import httpClient from '../../../app/httpClient';
 
 export const signUpEmployee = createAsyncThunk('signUpEmployee/signUp', async (employee: any) => {
 
-    const config = {
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-    };
-    httpClient.put('', employee, config);
+    //const config = {
+    //    headers: {
+    //        Authorization: `Bearer ${localStorage.getItem('token')}`
+    //    }
+    //};
+    httpClient.put('', employee);
 });
 
 export const signUpEmployeeSlice = createSlice({
@@ -18,7 +18,9 @@ export const signUpEmployeeSlice = createSlice({
     reducers: {
     },
     extraReducers(builder) {
+        builder.addCase(signUpEmployee.fulfilled, (state: any, action: any) => {
 
+        });
     }
 });
 

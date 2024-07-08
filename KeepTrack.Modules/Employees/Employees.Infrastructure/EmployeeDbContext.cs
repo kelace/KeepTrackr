@@ -17,6 +17,7 @@ namespace Employees.Infrastructure
 
             modelBuilder.Entity<Owner>(x =>
             {
+                x.ToTable("AspNetUsers", "dbo");
                 x.HasMany(x => x.Employees).WithOne().HasForeignKey(x => x.OwnerId);
                 x.Property(x => x.Id).ValueGeneratedNever();
                 x.Ignore(x => x.Events);
