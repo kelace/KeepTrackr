@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,7 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="InternalEventHandlers\" />
+    <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="MediatR" Version="12.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Companies.Domain\Companies.Domain.csproj" />
+    <ProjectReference Include="..\Companies.Infrastructure\Companies.Infrastructure.csproj" />
+    <ProjectReference Include="..\Companies.Messages\Companies.Messages.csproj" />
+    <ProjectReference Include="..\KeepTrack.Modules\Identity\Authentication.Messages\Authentication.Messages.csproj" />
+    <ProjectReference Include="..\KeepTrack.Modules\Identity\Authorization.Messages\Authentication.Messages.csproj" />
   </ItemGroup>
 
 </Project>

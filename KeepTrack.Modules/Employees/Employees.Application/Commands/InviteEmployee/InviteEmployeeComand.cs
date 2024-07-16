@@ -1,6 +1,7 @@
 ﻿using Employees.Domain.Base;
 using Employees.Domain.InvitingEmployee;
 using Employees.Domain.InvitingEmployee.Result;
+using KeepTrack.Common;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Employees.Application.Commands.InviteEmployee
 {
-    public class InviteEmployeeComand : IRequest<Result<InivtationResultInfo, Error>>
+    public class InviteEmployeeComand : IRequest<Result<InivtationResultInfo, Error>>, IApplicationCommand
     {
         public string Name { get; set; }
         public string Email { get; set; }

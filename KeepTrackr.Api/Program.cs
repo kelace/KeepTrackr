@@ -1,4 +1,3 @@
-using Authorization.Api.Extension;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +8,15 @@ using System.Net;
 using System.Text;
 using Employees.Api.Extensions;
 using Employees.Application.Queries.GetAllEmployees;
+using Companies.Api.Extensions;
+using Companies.Application.InternalEventHandlers;
+using KeepTrackr.Api;
+using KeepTrack.Common;
+using Employees.Infrastructure;
+using KeepTrackr.Behavior;
+using MediatR;
+using Authorization.Api.Extension;
+using ApplicationIdentity.Application.Commands.SignUpUser;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,15 +26,26 @@ var connectionString = builder.Configuration.GetSection("ConnectionStrings")["De
 
 mvcBuilder.AddAuthorizationPart(connectionString);
 mvcBuilder.AddEmployeeModule(connectionString);
+mvcBuilder.AddCompanyModule(connectionString);
+
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>) );
+
+builder.Services.Configure<ConnectionOptions>(options => options.DefaultConnection = connectionString);
+
+builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
+
+builder.Services.AddTransient<IUserContext, UserContext>();
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 
 builder.Services.AddFluentValidation();
 builder.Services.AddHttpContextAccessor();
 mvcBuilder.Services.AddMediatR((cfg) =>
 {
-    cfg.RegisterServicesFromAssembly(typeof(AddAuthorizationExtension).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(SignUpUserCommand).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(AddEmployeePart).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(GetAllEmployeesQuery).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(OwnerHasBeenSignedUpHandler).Assembly);
 });
 var ReactOrigin = "ReactOrigin";
 

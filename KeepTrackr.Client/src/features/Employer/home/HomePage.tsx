@@ -65,7 +65,7 @@ function HomePage() {
                 <Toolbar />
                 <Divider />
                 <List>
-                    {[{ text: 'Dashboard', link: 'dashboard' }, { text: 'Tasks', link: 'tasks' }, { text: 'Employees', link: 'employees' }, { text: 'Settings', link: 'configuration' }, { text: 'Subscription', link: 'subscription' }].map((item: any, index) => (
+                    {[{ text: 'Dashboard', link: 'dashboard' }, { text: 'Tasks', link: 'tasks' }, { text: 'Employees', link: 'employees' }, { text: 'Settings', link: 'configuration' }, { text: 'Subscription', link: 'subscription' }, { text: 'Companies', link: 'companies' }].map((item: any, index) => (
                         <Link to={item.link} component={RouterLink} key={item.text}>
                             <ListItem key={item.text} disablePadding>
                                 <ListItemButton>

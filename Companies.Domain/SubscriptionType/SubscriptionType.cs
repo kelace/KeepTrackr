@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KeepTrack.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Companies.Domain
 {
-    public class SubscriptionType
+    public class SubscriptionType : EntityBase, IAggregateRoot
     {
         public string Type { get; private set; }
         public int AllowedCompaniesCount { get; private set; }

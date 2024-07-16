@@ -1,5 +1,6 @@
 ﻿using Employees.Application;
 using Employees.Domain;
+using Employees.Domain.Company;
 using Employees.Domain.InvitingEmployee;
 using Employees.Infrastructure;
 using Employees.Infrastructure.Repositories;
@@ -16,8 +17,7 @@ namespace Employees.Api.Extensions
             mvcBuilder.Services.AddDbContext<EmployeeDbContext>(options => options.UseSqlServer(connectionString, x => x.MigrationsAssembly("KeepTrackr.Api")));
 
             mvcBuilder.Services.AddTransient<IOwnerRepository, OwnerRepository>();
-            mvcBuilder.Services.AddTransient<IUserContext, UserContext>();
-            mvcBuilder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+            mvcBuilder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
             return mvcBuilder;
         } 
     }
