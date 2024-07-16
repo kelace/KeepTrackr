@@ -18,5 +18,6 @@
     <Folder Include="src\features\Employer\dashboard\" />
     <Folder Include="src\features\Employee\dashboardEmployees\" />
     <Folder Include="src\features\Employer\tasks\" />
+    <Folder Include="src\features\Employer\companies\" />
   </ItemGroup>
 </Project>

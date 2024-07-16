@@ -1,10 +1,11 @@
 ﻿using Employees.Domain.Base;
 using Employees.Domain.InvitingEmployee.Events;
 using Employees.Domain.InvitingEmployee.Result;
+using KeepTrack.Common;
 
 namespace Employees.Domain.InvitingEmployee
 {
-    public class Owner : AggregateRoot
+    public class Owner : AggregateRoot, IAggregateRoot
     {
         //public bool IsAllowedToinvite { get; private set; }
         //public int AllowedEmployeeCountPerCompany { get; private set; }

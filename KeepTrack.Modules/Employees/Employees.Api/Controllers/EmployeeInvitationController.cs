@@ -2,6 +2,7 @@
 using Employees.Domain.Base;
 using Employees.Domain.InvitingEmployee.Result;
 using Employees.Infrastructure;
+using KeepTrack.Common;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

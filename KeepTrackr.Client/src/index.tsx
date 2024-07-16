@@ -16,6 +16,7 @@ import EmployeesHomePage from './features/Employee/employeesHome/EmployeesHomePa
 import DashboardEmployeesPage from './features/Employee/dashboardEmployees/DashboardEmployeesPage';
 import EmployeeTab from './features/Employer/employee/EmployeeTabt';
 import SignUpEmployee from './features/authentication/signUpEmployee/SignUpEmployee';
+import CompaniesComponent from './features/Employer/companies/CompaniesComponent';
 
 const router = createBrowserRouter([
     {
@@ -35,10 +36,6 @@ const router = createBrowserRouter([
                         element: <TasksPage />,
                     },
                     {
-                        path: '/companies',
-                        element: <DashboardPage />,
-                    },
-                    {
                         path: '/configuration',
                         element: <DashboardPage />,
                     },
@@ -49,6 +46,10 @@ const router = createBrowserRouter([
                     {
                         path: '/subscription',
                         element: <DashboardPage />,
+                    },
+                    {
+                        path: '/companies',
+                        element: <CompaniesComponent />,
                     }
                 ]
             },

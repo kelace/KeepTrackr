@@ -5,7 +5,8 @@ import accountReducer from "../features/account/accountSlice";
 import authenticationReducer from "../features/authentication/signup/signUpSlice";
 import dashboardReducer from "../features/Employer/dashboard/dashboardSlice";
 import employeesReducer from "../features/Employer/employee/employeesSlice";
-import { useDispatch  } from "react-redux";
+import { useDispatch } from "react-redux";
+import companiesReducer from "../features/Employer/companies/CompaniesSlice";
 
 const token = localStorage.getItem('token');
 
@@ -39,7 +40,9 @@ const store = configureStore({
         account: accountReducer,
         authentication: authenticationReducer,
         dashboard: dashboardReducer,
-        employerEmployees: employeesReducer
+        employerEmployees: employeesReducer,
+        companies: companiesReducer,
+
     },
     preloadedState: {
         account: account

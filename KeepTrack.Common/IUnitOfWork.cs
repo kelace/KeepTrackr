@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace KeepTrack.Common
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
+        Task SaveAsync();
+        Task BeginTransaction();
+        Task CommitTransaction();
+        Task RollBackTransaction();
     }
 }
