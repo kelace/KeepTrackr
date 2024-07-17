@@ -12,10 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Identity\Authentication.Messages\Authentication.Messages.csproj" />
     <ProjectReference Include="..\Companies.Domain\Companies.Domain.csproj" />
     <ProjectReference Include="..\Companies.Infrastructure\Companies.Infrastructure.csproj" />
     <ProjectReference Include="..\Companies.Messages\Companies.Messages.csproj" />
-    <ProjectReference Include="..\KeepTrack.Modules\Identity\Authentication.Messages\Authentication.Messages.csproj" />
   </ItemGroup>
 
 </Project>

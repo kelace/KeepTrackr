@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KeepTrack.Common\KeepTrack.Common.csproj" />
+    <ProjectReference Include="..\..\..\KeepTrack.Common\KeepTrack.Common.csproj" />
   </ItemGroup>
 
 </Project>

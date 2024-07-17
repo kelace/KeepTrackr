@@ -20,8 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Companies.Api\Companies.Api.csproj" />
-    <ProjectReference Include="..\Companies.Application\Companies.Application.csproj" />
+    <ProjectReference Include="..\KeepTrack.Modules\Company\Companies.Api\Companies.Api.csproj" />
+    <ProjectReference Include="..\KeepTrack.Modules\Company\Companies.Application\Companies.Application.csproj" />
+    <ProjectReference Include="..\KeepTrack.Modules\Configuration\Configuration.API\Configuration.API.csproj" />
+    <ProjectReference Include="..\KeepTrack.Modules\Configuration\Configuration.Application\Configuration.Application.csproj" />
     <ProjectReference Include="..\KeepTrack.Modules\Employees\Employees.Api\Employees.Api.csproj" />
     <ProjectReference Include="..\KeepTrack.Modules\Identity\Authentication.Api\Authentication.Api.csproj" />
     <ProjectReference Include="..\KeepTrack.Persistance\KeepTrack.Persistance.csproj" />

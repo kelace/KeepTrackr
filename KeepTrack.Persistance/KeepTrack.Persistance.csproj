@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Companies.Infrastructure\Companies.Infrastructure.csproj" />
     <ProjectReference Include="..\KeepTrack.Common\KeepTrack.Common.csproj" />
+    <ProjectReference Include="..\KeepTrack.Modules\Company\Companies.Infrastructure\Companies.Infrastructure.csproj" />
     <ProjectReference Include="..\KeepTrack.Modules\Employees\Employees.Infrastructure\Employees.Infrastructure.csproj" />
     <ProjectReference Include="..\KeepTrack.Modules\Identity\Authentication.Infastructure\Authentication.Infastructure.csproj" />
   </ItemGroup>

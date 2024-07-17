@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Companies.Messages\Companies.Messages.csproj" />
+    <ProjectReference Include="..\..\Company\Companies.Messages\Companies.Messages.csproj" />
     <ProjectReference Include="..\..\Identity\Authentication.Messages\Authentication.Messages.csproj" />
     <ProjectReference Include="..\Employee.Messages\Employees.Messages.csproj" />
     <ProjectReference Include="..\Employees.Domain\Employees.Domain.csproj" />

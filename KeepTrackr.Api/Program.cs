@@ -8,8 +8,6 @@ using System.Net;
 using System.Text;
 using Employees.Api.Extensions;
 using Employees.Application.Queries.GetAllEmployees;
-using Companies.Api.Extensions;
-using Companies.Application.InternalEventHandlers;
 using KeepTrackr.Api;
 using KeepTrack.Common;
 using Employees.Infrastructure;
@@ -17,6 +15,8 @@ using KeepTrackr.Behavior;
 using MediatR;
 using Authorization.Api.Extension;
 using ApplicationIdentity.Application.Commands.SignUpUser;
+using Companies.Api.Extensions;
+using Companies.Application.InternalEventHandlers;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -2,7 +2,7 @@
 using Companies.Infrastructure;
 using Companies.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+
 
 namespace Companies.Api.Extensions
 {
