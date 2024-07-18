@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="EventHandlers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="MediatR" Version="12.3.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.1" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\KeepTrack.Common\KeepTrack.Common.csproj" />
+    <ProjectReference Include="..\..\Employees\Employee.Messages\Employees.Messages.csproj" />
+    <ProjectReference Include="..\..\Identity\Authentication.Messages\Authentication.Messages.csproj" />
+    <ProjectReference Include="..\Task.Domain\TaskManagment.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

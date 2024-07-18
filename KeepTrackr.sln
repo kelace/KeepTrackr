@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payment", "Payment", "{B1DF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Employees", "Employees", "{80B79146-A3C5-4F4B-9BE3-80A119C926A0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task", "Task", "{8F67561F-06AA-4926-8266-CD65299F5501}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TaskManagment", "TaskManagment", "{8F67561F-06AA-4926-8266-CD65299F5501}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{BAD2FAE0-206E-45B7-95FD-3C8C5E42DFC1}"
 EndProject
@@ -43,13 +43,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Configuration.Domain", "Kee
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Configuration.Persistance", "KeepTrack.Modules\Configuration\Configuration.Persistance\Configuration.Persistance.csproj", "{3747A323-7509-47CB-A1CF-305BAA697962}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task.Api", "KeepTrack.Modules\Tasks\Task.Api\Task.Api.csproj", "{F4B02E8D-6A57-444E-93DD-C30C6F8EF941}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManagment.Api", "KeepTrack.Modules\Tasks\Task.Api\TaskManagment.Api.csproj", "{F4B02E8D-6A57-444E-93DD-C30C6F8EF941}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task.Application", "KeepTrack.Modules\Tasks\Task.Application\Task.Application.csproj", "{C54CC9AE-B587-48EF-A613-5B2025EBC760}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManagment.Application", "KeepTrack.Modules\Tasks\Task.Application\TaskManagment.Application.csproj", "{C54CC9AE-B587-48EF-A613-5B2025EBC760}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task.Domain", "KeepTrack.Modules\Tasks\Task.Domain\Task.Domain.csproj", "{60E1B8DC-383A-475A-8FCD-AA58AC083D7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManagment.Domain", "KeepTrack.Modules\Tasks\Task.Domain\TaskManagment.Domain.csproj", "{60E1B8DC-383A-475A-8FCD-AA58AC083D7E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task.Infrastructure", "KeepTrack.Modules\Tasks\Task.Infrastructure\Task.Infrastructure.csproj", "{898542B2-86F8-400B-BCF3-4706C31068B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManagment.Infrastructure", "KeepTrack.Modules\Tasks\Task.Infrastructure\TaskManagment.Infrastructure.csproj", "{898542B2-86F8-400B-BCF3-4706C31068B5}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Keeptrackr.Client", "KeepTrackr.Client\Keeptrackr.Client.esproj", "{26CC3BEB-9F9B-4F37-855B-9775BB79189A}"
 EndProject

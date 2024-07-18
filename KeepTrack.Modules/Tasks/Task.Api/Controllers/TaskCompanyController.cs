@@ -2,7 +2,7 @@
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Task.Api.Controllers
+namespace TaskManagment.Api.Controllers
 {
     [Route("api/task/company?")]
     [ApiController]

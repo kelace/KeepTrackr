@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\KeepTrack.Common\KeepTrack.Common.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,43 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using TaskManagment.Application.Commands.AddTask;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace Task.Api.Controllers
+namespace TaskManagment.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/company/{company}")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class TaskController : ControllerBase
     {
-        // GET: api/<TaskController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IMediator _mediator;
+
+        public TaskController(IMediator mediator)
         {
-            return new string[] { "value1", "value2" };
+            _mediator = mediator;
         }
 
-        // GET api/<TaskController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<TaskController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async System.Threading.Tasks.Task<IActionResult> Post([FromQuery] string company,AddTaskCommand command)
         {
-        }
-
-        // PUT api/<TaskController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<TaskController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            command.CompanyName = company;
+            await _mediator.Send(command);
+            return Ok();
         }
     }
 }
