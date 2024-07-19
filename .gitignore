@@ -5,6 +5,7 @@
 
 # dotenv files
 .env
+!KeepTrackr.Client/.env
 
 # User-specific files
 *.rsuser
@@ -482,8 +483,3 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
-
-#User dynamic files
-BlogFest.Web/Content/Images/*
-!BlogFest.Web/Content/Images/default-image-title-preview.jpg
-!BlogFest.Web/Content/Images/default-user-img.jpeg
