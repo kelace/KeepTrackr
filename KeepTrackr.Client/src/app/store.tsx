@@ -12,6 +12,7 @@ const token = localStorage.getItem('token');
 
 interface JwtData {
     exp: number,
+    iat: number,
     name: string,
     token: string,
     type: WorkerType,
@@ -24,10 +25,9 @@ let account: CurrentAccount = {} as CurrentAccount;
 if (token != null) {
     try {
         jwtDecoded = jwtDecode<JwtData>(token);
-        let noew = Date.now();
         account = {
             name: jwtDecode.name,
-            isAuthenticated: jwtDecoded.exp > noew ? true : false,
+                isAuthenticated: jwtDecoded.exp * 1000 > Date.now() ? true : false,
             workerType: jwtDecoded.type,
         /*    company: jwtDecoded.company*/
         };

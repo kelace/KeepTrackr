@@ -4,7 +4,6 @@ using Authorization.Messages;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
@@ -48,13 +47,18 @@ namespace Authorization.Api.Services.Authentication
                 new Claim("name", user.Name)
             };
 
-            var Sectoken = new JwtSecurityToken(null,
-             null,
-             claims,
-             expires: DateTime.Now.AddMinutes(120),
-             signingCredentials: credentials);
 
-            var token = new JwtSecurityTokenHandler().WriteToken(Sectoken);
+            var d = DateTime.UtcNow.AddMinutes(15);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddMinutes(20),
+                SigningCredentials = credentials,
+            };
+
+            var handler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+            var sectoken = handler.CreateToken(tokenDescriptor);
+            var token = handler.WriteToken(sectoken);
 
             return new AuthenticationSignInResult(true, token)
             {
