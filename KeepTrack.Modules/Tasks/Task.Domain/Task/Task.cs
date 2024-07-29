@@ -13,29 +13,29 @@ namespace TaskManagment.Domain
         public DateTime Created { get; private set; }
         public DateTime Updated { get; private set; }
         public Guid AssignedTo { get;  private set; }
-        public List<Guid> Labels { get; private set; }
-        public CompanyId CompanyId { get; private set; }
+        public List<LabelLineItem> Labels { get; private set; }
 
         public void AssignExecutorToTask(Guid id)
         {
             AssignedTo = id;
         }
 
-        public void AddLabel(Guid id)
+        public void AddLabel(LabelLineItem item)
         {
-            Labels.Add(id);
+            if (Labels.Count > 10) throw new Exception("asdasd");
+            Labels.Add(item);
         }
 
-        public static Task CreateEmpty(CompanyId companyId)
-        {
-            return new Task
-            {
-                CompanyId = companyId,
-                Created = DateTime.Now,
-                Updated = DateTime.Now
-            };
+        //public static Task CreateEmpty(CompanyId companyId)
+        //{
+        //    return new Task
+        //    {
+        //        CompanyId = companyId,
+        //        Created = DateTime.Now,
+        //        Updated = DateTime.Now
+        //    };
 
-        }
+        //}
 
     }
 }

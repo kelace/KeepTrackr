@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace  TaskManagment.Domain
+namespace  TaskManagment.Domain.Executors
 {
     public record Error(string code, string description);
 }

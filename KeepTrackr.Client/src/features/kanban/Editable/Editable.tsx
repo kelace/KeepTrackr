@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Plus, X } from "react-feather";
 import "./Editable.css";
+import { changeNewBoardName } from '../../Employer/tasks/tasksPageSlice';
+import { AppDispatch } from '../../../app/store';
 
 const Editable = (props: any) => {
   const [show, setShow] = useState(props?.handler || false);
   const [text, setText] = useState(props.defaultValue || "");
+/*    const dispatch = useDispatch<AppDispatch>();*/
 
     const handleOnSubmit = (e: any) => {
     e.preventDefault();

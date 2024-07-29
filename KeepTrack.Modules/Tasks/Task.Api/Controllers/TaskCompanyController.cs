@@ -4,7 +4,7 @@
 
 namespace TaskManagment.Api.Controllers
 {
-    [Route("api/task/company?")]
+    [Route("api/task/company")]
     [ApiController]
     public class TaskCompanyController : ControllerBase
     {

@@ -4,18 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManagment.Domain.Boards;
+using TaskManagment.Domain.Labels;
 
-namespace TaskManagment.Domain
+namespace TaskManagment.Domain.Executors
 {
     public class Executor : EntityBase, IAggregateRoot
     {
         public string Name { get; private set; }
-        public ExecutorType Type { get; private set; }
+        public ExecutorType ExecutorType { get; private set; }
         public DateTime Created { get; private set; }   
 
         public Result<Label, Error> CreateLabel(string name)
         {
-            if (Type != ExecutorType.Employer) return Errors.EmployerLabelCreation;
+            if (ExecutorType != ExecutorType.Employer) return Errors.EmployerLabelCreation;
             return new Label(name);
         }
 
@@ -26,7 +28,7 @@ namespace TaskManagment.Domain
                 Id = id,
                 Created = DateTime.UtcNow,
                 Name = name,
-                Type = type
+                ExecutorType = type
             };
         }
     }

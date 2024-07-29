@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskManagment.Domain;
+using TaskManagment.Domain.Executors;
 
 namespace TaskManagment.Infrastructure.Persistance.Repositories
 {

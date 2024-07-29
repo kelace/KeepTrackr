@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace  TaskManagment.Domain
+namespace TaskManagment.Application.Queries.GetAllBoardsInfo.DTOs
 {
-    public enum ExecutorType
+    public class CardDTO
     {
-        Employer,
-        Employee
+        public Guid Id { get; set; }
     }
 }

@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Companies.Messages\Companies.Messages.csproj" />
     <ProjectReference Include="..\..\..\KeepTrack.Common\KeepTrack.Common.csproj" />
     <ProjectReference Include="..\..\Employees\Employee.Messages\Employees.Messages.csproj" />
     <ProjectReference Include="..\..\Identity\Authentication.Messages\Authentication.Messages.csproj" />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ChangeEvent } from "react";
 import Card from "../Card/Card";
 import "./Board.css";
 import { MoreHorizontal } from "react-feather";
@@ -8,7 +8,16 @@ import { Droppable } from 'react-beautiful-dnd';
 
 export default function Board(props : any) {
   const [show, setShow] = useState(false);
-  const [dropdown, setDropdown] = useState(false);
+    const [dropdown, setDropdown] = useState(false);
+    const [title, setTitle] = useState("");
+
+    //const handleTitleChange = (e : any) => {
+    //    dispatch(changeNewBoardName(e.target.value));
+    //}
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.target.value);
+    };
 
   useEffect(() => {
     document.addEventListener("keypress", (e) => {
@@ -29,10 +38,8 @@ export default function Board(props : any) {
             <input
               className="title__input"
               type={"text"}
-              defaultValue={props.name}
-              onChange={(e) => {
-                props.setName(e.target.value, props.id);
-              }}
+              value={title}
+              onChange={handleChange}
             />
           </div>
         ) : (

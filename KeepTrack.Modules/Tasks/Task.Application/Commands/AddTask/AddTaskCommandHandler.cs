@@ -24,16 +24,16 @@ namespace TaskManagment.Application.Commands.AddTask
 
         public async System.Threading.Tasks.Task Handle(AddTaskCommand request, CancellationToken cancellationToken)
         {
-            var companyId = new CompanyId
-            {
-                CompanyName = request.CompanyName,
-                CompanyOwnerId = _userContext.GetCrrentUserId
-            };
+            //var companyId = new CompanyId
+            //{
+            //    CompanyName = request.CompanyName,
+            //    CompanyOwnerId = _userContext.GetCrrentUserId
+            //};
 
-            var task = Domain.Task.CreateEmpty(companyId);
+            //var task = Domain.Task.CreateEmpty(companyId);
 
-            await _taskRepository.AddAsync(task);
-            await _unitOfWork.SaveAsync();
+            //await _taskRepository.AddAsync(task);
+            //await _unitOfWork.SaveAsync();
 
         }
     }

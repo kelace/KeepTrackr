@@ -1,26 +1,39 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TaskManagment.Application.Commands.AddBoard;
 using TaskManagment.Application.Commands.AddTask;
+using TaskManagment.Application.Queries.GetAllBoardsInfo;
+using TaskManagment.Application.Queries.GetAllBoardsInfo.DTOs;
 
 namespace TaskManagment.Api.Controllers
 {
-    [Route("api/[controller]/company/{company}")]
+    [Route("api/[controller]/")]
     [ApiController]
     [Authorize(AuthenticationSchemes = "Bearer")]
-    public class TaskController : ControllerBase
+    public class TasksController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public TaskController(IMediator mediator)
+        public TasksController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [HttpPost]
-        public async System.Threading.Tasks.Task<IActionResult> Post([FromQuery] string company,AddTaskCommand command)
+        [HttpGet]
+        [Route("boards")]
+        public async System.Threading.Tasks.Task<List<BoardDTO>> Boards(string company)
         {
-            command.CompanyName = company;
+            return await _mediator.Send<List<BoardDTO>>(new GetAllBoardsInfoQuery
+            {
+                CompanyName = company
+            });
+        } 
+
+        [HttpPost]
+        [Route("boards")]
+        public async System.Threading.Tasks.Task<IActionResult> Boards(AddBoardCommand command)
+        {
             await _mediator.Send(command);
             return Ok();
         }

@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import AuthenticationPage from './features/account/AuthenticationPage';
 import HomePage from './features/Employer/home/HomePage';
-import { Outlet, redirect, useNavigate } from 'react-router-dom';
+import { Outlet, redirect, useNavigate, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function App() {
@@ -11,17 +11,17 @@ function App() {
         return state.account.isAuthenticated;
     });
 
-    const navigate = useNavigate();
+   // const navigate = useNavigate();
 
-   React.useEffect(() => {
-       if (!isAuthenticated) {
-           navigate("/authentication/signin");
-        }
-   }, []);
+   //React.useEffect(() => {
+   //    if (!isAuthenticated) {
+   //        navigate("/authentication/signin");
+   //     }
+   //}, []);
 
   return (
       <div className="App">
-          <Outlet />
+          {isAuthenticated ? <Outlet />  : <Navigate to="/authentication/signin" />}
     </div>
   );
 }
