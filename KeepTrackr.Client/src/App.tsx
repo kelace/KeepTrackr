@@ -11,14 +11,6 @@ function App() {
         return state.account.isAuthenticated;
     });
 
-   // const navigate = useNavigate();
-
-   //React.useEffect(() => {
-   //    if (!isAuthenticated) {
-   //        navigate("/authentication/signin");
-   //     }
-   //}, []);
-
   return (
       <div className="App">
           {isAuthenticated ? <Outlet />  : <Navigate to="/authentication/signin" />}

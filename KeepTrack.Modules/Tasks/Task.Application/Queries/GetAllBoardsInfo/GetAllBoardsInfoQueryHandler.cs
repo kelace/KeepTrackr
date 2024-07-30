@@ -30,7 +30,7 @@ namespace TaskManagment.Application.Queries.GetAllBoardsInfo
                             select * from task.Boards b
                             left join task.Cards c on b.Id = c.BoardId                            
                             where b.CompanyId_CompanyName = @CompanyName and b.CompanyId_CompanyOwnerId = @OwnerId
-
+                            order by [b].[ORDER] asc
                             ";
 
                 BoardDTO JoinMap(BoardDTO board, CardDTO card)

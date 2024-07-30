@@ -73,30 +73,30 @@ export default function Board(props : any) {
           )}
         </div>
       </div>
-      <Droppable droppableId={props.id.toString()}>
-        {(provided) => (
-          <div
-            className="board__cards"
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-          >
-            {props.card?.map((items : any, index : any) => (
-              <Card
-                bid={props.id}
-                id={items.id}
-                index={index}
-                key={items.id}
-                title={items.title}
-                tags={items.tags}
-                updateCard={props.updateCard}
-                removeCard={props.removeCard}
-                card={items}
-              />
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+      {/*<Droppable droppableId={props.id.toString()}>*/}
+      {/*  {(provided) => (*/}
+      {/*    <div*/}
+      {/*      className="board__cards"*/}
+      {/*      ref={provided.innerRef}*/}
+      {/*      {...provided.droppableProps}*/}
+      {/*    >*/}
+      {/*      {props.card?.map((items : any, index : any) => (*/}
+      {/*        <Card*/}
+      {/*          bid={props.id}*/}
+      {/*          id={items.id}*/}
+      {/*          index={index}*/}
+      {/*          key={items.id}*/}
+      {/*          title={items.title}*/}
+      {/*          tags={items.tags}*/}
+      {/*          updateCard={props.updateCard}*/}
+      {/*          removeCard={props.removeCard}*/}
+      {/*          card={items}*/}
+      {/*        />*/}
+      {/*      ))}*/}
+      {/*      {provided.placeholder}*/}
+      {/*    </div>*/}
+      {/*  )}*/}
+      {/*</Droppable>*/}
       <div className="board__footer">
         <Editable
           name={"Add Card"}

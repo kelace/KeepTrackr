@@ -18,6 +18,15 @@ namespace TaskManagment.Domain.Boards
         public CompanyId CompanyId { get; private set; }
         public int Order { get; private set; }
 
+        public void Reorder(int order)
+        {
+            Order = order;
+        }
+        public void Update(string title, int order)
+        {
+            Title = title;
+            Order = order;
+        }
         public Card AddCard(string title)
         {
             if (CardsCount >= MaxCardsAllowed) throw new Exception("asdasd");

@@ -11,5 +11,6 @@ namespace TaskManagment.Application.Queries.GetAllBoardsInfo.DTOs
         public Guid Id { get; set; }
         public List<CardDTO> Cards { get; set; } = new List<CardDTO>();
         public string Title { get; set; }
+        public int Order { get; set; }
     }
 }

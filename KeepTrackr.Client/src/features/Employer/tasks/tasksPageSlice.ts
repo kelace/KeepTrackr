@@ -2,6 +2,7 @@ import { Build } from '@mui/icons-material';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import httpClient from '../../../app/httpClient';
+import { useSelector } from 'react-redux';
 
 
 interface Board {
@@ -10,8 +11,14 @@ interface Board {
     order: number
 };
 
+interface ReorderBoard {
+    boardid: string,
+    sourceOrder: number,
+    destinationOrder: number,
+    company: string | undefined
+};
 
-export const reorderBoard = createAsyncThunk('tasks/reorderBoardw', async (board: Board) => {
+export const reorderBoard = createAsyncThunk('tasks/reorderBoard', async (board: ReorderBoard) => {
 
     const token = localStorage.getItem('token');
 
@@ -21,9 +28,10 @@ export const reorderBoard = createAsyncThunk('tasks/reorderBoardw', async (board
         }
     };
 
-    const result = await httpClient.put('tasks/board', board, config);
+/*    const boards = useSelector((x : any) => x.state.boards.entities);*/
+    const result = httpClient.put('api/tasks/boards/order', board, config);
 
-    return result.data;
+    return board;
 
 });
 
@@ -95,6 +103,16 @@ const slice = createSlice({
     extraReducers(builder) {
         builder.addCase(fetchAllBoards.fulfilled, (state: any, action: any) => {
             state.boards.entities = action.payload;
+        });
+
+        builder.addCase(reorderBoard.fulfilled, (state: any, action: any) => {
+            const board = state.boards.entities.find((el: any) => el.id == action.payload.boardid);
+
+            board.order = action.payload.destinationOrder;
+
+
+           /* state.boards.entities[action.payload.id].order = */
+            state.boards.entities.sort((a: any, b: any) => a.order > b.order ? 1 : -1);
         });
 
         builder.addCase(addBoard.fulfilled, (state: any, action: any) => {
