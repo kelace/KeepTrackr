@@ -9,6 +9,11 @@ namespace Subscription.Domain.Subscriptions
 {
     public class SubscriptionType : EntityBase, IAggregateRoot
     {
+        public SubscriptionType(string type)
+        {
+            Type = type;
+        }
+
         public string Type { get; private set; }
     }
 }

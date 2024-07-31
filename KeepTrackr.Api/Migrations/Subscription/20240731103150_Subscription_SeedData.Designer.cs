@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Subscription.Infrastructure;
 
@@ -11,9 +12,11 @@ using Subscription.Infrastructure;
 namespace KeepTrackr.Api.Migrations.Subscription
 {
     [DbContext(typeof(SubscriptionContext))]
-    partial class SubscriptionContextModelSnapshot : ModelSnapshot
+    [Migration("20240731103150_Subscription_SeedData")]
+    partial class Subscription_SeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

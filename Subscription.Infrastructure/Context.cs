@@ -20,6 +20,16 @@ namespace Subscription.Infrastructure
         public DbSet<User> Users { get; set; }
         public DbSet<SubscriptionType> SubscriptionTypes { get; set; }
 
+        private void SeedData(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<SubscriptionType>().HasData(new List<SubscriptionType>
+            {
+                new SubscriptionType("Standart"),
+                new SubscriptionType("Normal"),
+                new SubscriptionType("Premium")
+            } );
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -46,6 +56,8 @@ namespace Subscription.Infrastructure
                 x.HasKey(c => c.Type);
                 //x.HasOne<SubscriptionItem>().WithMany().HasForeignKey(c => c.Type);
             });
+
+            //SeedData(modelBuilder);
         }
     }
 }
