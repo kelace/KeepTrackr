@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.3.0" />
+    <PackageReference Include="MediatR" Version="12.4.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.18">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -28,6 +28,8 @@
     <ProjectReference Include="..\KeepTrack.Modules\Identity\Authentication.Api\Authentication.Api.csproj" />
     <ProjectReference Include="..\KeepTrack.Persistance\KeepTrack.Persistance.csproj" />
     <ProjectReference Include="..\KeepTrackr.Behavior\KeepTrackr.Behavior.csproj" />
+    <ProjectReference Include="..\Subscription.Api\Subscription.Api.csproj" />
+    <ProjectReference Include="..\Subscription.Application\Subscription.Application.csproj" />
   </ItemGroup>
 
 </Project>
