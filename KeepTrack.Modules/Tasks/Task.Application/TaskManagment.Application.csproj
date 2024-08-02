@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="EventHandlers\" />
+    <Compile Remove="EventHandlers\**" />
+    <EmbeddedResource Remove="EventHandlers\**" />
+    <None Remove="EventHandlers\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Companies.Messages\Companies.Messages.csproj" />
     <ProjectReference Include="..\..\..\KeepTrack.Common\KeepTrack.Common.csproj" />
+    <ProjectReference Include="..\..\Company\Companies.Messages\Companies.Messages.csproj" />
     <ProjectReference Include="..\..\Employees\Employee.Messages\Employees.Messages.csproj" />
     <ProjectReference Include="..\..\Identity\Authentication.Messages\Authentication.Messages.csproj" />
     <ProjectReference Include="..\Task.Domain\TaskManagment.Domain.csproj" />

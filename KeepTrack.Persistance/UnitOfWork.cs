@@ -21,6 +21,7 @@ namespace Employees.Infrastructure
         private IDbContextTransaction _companyTransaction;
         private IDbContextTransaction _identityTransaction;
         private IDbContextTransaction _taskTransaction;
+        private IDbContextTransaction _subscriptionTransaction;
         public UnitOfWork(EmployeeDbContext employeeContext, CompanyDbContext companyDbContext, AuthContext identityContext, IMediator mediator, TaskContext taskContext, SubscriptionContext subscriptionContext)
         {
             _companyContext = companyDbContext;

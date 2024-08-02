@@ -20,7 +20,7 @@ namespace Subscription.Application.ExternalHandlers
 
         public async Task Handle(UserHasBeenSignedUpMessage notification, CancellationToken cancellationToken)
         {
-            var user = User.CreateUser(notification.UserId, notification.UserName);
+            var user = User.CreateUser(notification.UserId, notification.Name);
 
             user.SubscribeToNormal();
 
