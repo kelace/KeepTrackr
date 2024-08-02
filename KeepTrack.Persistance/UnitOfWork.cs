@@ -71,7 +71,7 @@ namespace Employees.Infrastructure
         {
             var employeeEntities = _employeeContext.ChangeTracker.Entries<EntityBase>().Where(x => x.Entity.Events != null && x.Entity.Events.Any()).ToList();
             var companiesEntities = _companyContext.ChangeTracker.Entries<EntityBase>().Where(x => x.Entity.Events != null && x.Entity.Events.Any()).ToList();
-            var subscriptionsEntities = _companyContext.ChangeTracker.Entries<EntityBase>().Where(x => x.Entity.Events != null && x.Entity.Events.Any()).ToList();
+            var subscriptionsEntities = _subscriptionContext.ChangeTracker.Entries<EntityBase>().Where(x => x.Entity.Events != null && x.Entity.Events.Any()).ToList();
             var entities = employeeEntities.Union(companiesEntities).Union(subscriptionsEntities).ToList();
 
             var events = entities.SelectMany(x => x.Entity.Events).ToList();
