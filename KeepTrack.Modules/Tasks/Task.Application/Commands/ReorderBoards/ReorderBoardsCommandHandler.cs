@@ -25,47 +25,44 @@ namespace TaskManagment.Application.Commands.ReorderBoards
         {
             var boards = await _boardRepository.GetBoardsAsync(_userContext.GetCrrentUserId, request.Company);
 
-
-            //for (int i = 0; i < length; i++)
-            //{
-
-            //}
-
             if (request.DestinationOrder == request.SourceOrder) return;
+            if (request.DestinationOrder > boards.Count || request.DestinationOrder < 0) return;
+            if (request.SourceOrder  > boards.Count || request.SourceOrder < 0) return;
 
             if(request.DestinationOrder > request.SourceOrder)
             {
                 
                 foreach (var item in boards)
                 {
+                    if (item.Order > request.DestinationOrder) break;
                     if (item.Id == request.BoardId)
                     {
                         item.Reorder(request.DestinationOrder);
                         continue;
-                    }
+                    };
 
-                    if (item.Order > request.DestinationOrder) continue;
+                    if (item.Order > request.DestinationOrder || item.Order < request.SourceOrder) continue;
 
                     item.Reorder(item.Order - 1);
                 }
 
-            } else
+            } 
+            else
             {
                 foreach (var item in boards)
                 {
+                    if (item.Order > request.SourceOrder) break;
                     if (item.Id == request.BoardId)
                     {
                         item.Reorder(request.DestinationOrder);
                         continue;
                     }
 
-                    if (item.Order < request.DestinationOrder) continue;
+                    if (item.Order < request.DestinationOrder || item.Order > request.SourceOrder) continue;
 
-                    item.Reorder(item.Order - 1);
+                    item.Reorder(item.Order + 1);
                 }
             }
-
-
 
             //foreach (var item in boards)
             //{
@@ -88,5 +85,7 @@ namespace TaskManagment.Application.Commands.ReorderBoards
             await _unitOfWork.SaveAsync();
 
         }
+
+
     }
 }
