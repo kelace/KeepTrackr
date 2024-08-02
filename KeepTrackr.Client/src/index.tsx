@@ -11,6 +11,7 @@ import SignInPage from './features/authentication/signin/SignInPage';
 import SignUpPage from './features/authentication/signup/SignUpPage';
 import HomePage from './features/Employer/home/HomePage';
 import TasksPage from './features/Employer/tasks/TasksPage';
+import TasksCompanies from './features/Employer/tasksCompanies/TasksCompanies';
 import DashboardPage from './features/Employer/dashboard/DashboardPage';
 import EmployeesHomePage from './features/Employee/employeesHome/EmployeesHomePage';
 import DashboardEmployeesPage from './features/Employee/dashboardEmployees/DashboardEmployeesPage';
@@ -33,8 +34,12 @@ const router = createBrowserRouter([
                         element: <DashboardPage />,
                     },
                     {
-                        path: '/tasks',
+                        path: '/tasks/:company',
                         element: <TasksPage />,
+                    },
+                    {
+                        path: '/tasks/companies',
+                        element: <TasksCompanies />,
                     },
                     {
                         path: '/configuration',
@@ -96,11 +101,11 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-    <React.StrictMode>
+/*    <React.StrictMode>*/
         <Provider store={store}>
             <RouterProvider router={router} />
         </Provider>
-  </React.StrictMode>
+/*  </React.StrictMode>*/
 );
 
 // If you want to start measuring performance in your app, pass a function

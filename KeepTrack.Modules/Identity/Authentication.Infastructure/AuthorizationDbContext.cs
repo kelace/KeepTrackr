@@ -20,7 +20,6 @@ namespace Authorization.Infastructure
             Database.Migrate();
         }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 

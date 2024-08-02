@@ -26,6 +26,9 @@
     <ProjectReference Include="..\KeepTrack.Modules\Configuration\Configuration.Application\Configuration.Application.csproj" />
     <ProjectReference Include="..\KeepTrack.Modules\Employees\Employees.Api\Employees.Api.csproj" />
     <ProjectReference Include="..\KeepTrack.Modules\Identity\Authentication.Api\Authentication.Api.csproj" />
+    <ProjectReference Include="..\KeepTrack.Modules\Tasks\Task.Api\TaskManagment.Api.csproj" />
+    <ProjectReference Include="..\KeepTrack.Modules\Tasks\Task.Application\TaskManagment.Application.csproj" />
+    <ProjectReference Include="..\KeepTrack.Modules\Tasks\Task.Domain\TaskManagment.Domain.csproj" />
     <ProjectReference Include="..\KeepTrack.Persistance\KeepTrack.Persistance.csproj" />
     <ProjectReference Include="..\KeepTrackr.Behavior\KeepTrackr.Behavior.csproj" />
     <ProjectReference Include="..\Subscription.Api\Subscription.Api.csproj" />

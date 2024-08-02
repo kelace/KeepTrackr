@@ -21,7 +21,8 @@ namespace Companies.Application.EventsHandler
         {
             await _mediator.Publish(new CompanyHasBeenAddedExternalEvent
             {
-                CompanyName = notification.CompanyName
+                CompanyName = notification.CompanyName,
+                OwnerId = notification.OwnerId,
             });
         }
     }

@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import AuthenticationPage from './features/account/AuthenticationPage';
 import HomePage from './features/Employer/home/HomePage';
-import { Outlet, redirect, useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, redirect, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch } from './app/store';
 import { clear } from './features/Employer/subscription/SubscriptionSlice';
@@ -28,7 +28,7 @@ function App() {
 
   return (
       <div className="App">
-          <Outlet />
+          {isAuthenticated ? <Outlet />  : <Navigate to="/authentication/signin" />}
     </div>
   );
 }

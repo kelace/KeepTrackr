@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Subscription.Infrastructure;
+using TaskManagment.Infrastructure.Persistance;
 
 namespace Employees.Infrastructure
 {
@@ -14,16 +15,18 @@ namespace Employees.Infrastructure
         public CompanyDbContext _companyContext;
         public AuthContext _identityContext;
         public SubscriptionContext _subscriptionContext;
+        public TaskContext _taskContext;
         public IMediator _mediator;
         private IDbContextTransaction _employeeTransaction;
         private IDbContextTransaction _companyTransaction;
         private IDbContextTransaction _identityTransaction;
-        private IDbContextTransaction _subscriptionTransaction;
-        public UnitOfWork(EmployeeDbContext employeeContext, CompanyDbContext companyDbContext, AuthContext identityContext, IMediator mediator, SubscriptionContext subscriptionContext)
+        private IDbContextTransaction _taskTransaction;
+        public UnitOfWork(EmployeeDbContext employeeContext, CompanyDbContext companyDbContext, AuthContext identityContext, IMediator mediator, TaskContext taskContext, SubscriptionContext subscriptionContext)
         {
             _companyContext = companyDbContext;
             _employeeContext = employeeContext;
             _identityContext = identityContext;
+            _taskContext = taskContext;
             _mediator = mediator;
             _subscriptionContext = subscriptionContext;
         }
@@ -33,6 +36,7 @@ namespace Employees.Infrastructure
             _companyTransaction = await _companyContext.Database.BeginTransactionAsync();
             _identityTransaction = await _identityContext.Database.BeginTransactionAsync();
             _subscriptionTransaction = await _subscriptionContext.Database.BeginTransactionAsync();
+            _taskTransaction = await _taskContext.Database.BeginTransactionAsync();
         }
 
         public async Task CommitTransaction()
@@ -41,6 +45,7 @@ namespace Employees.Infrastructure
             await _companyTransaction.CommitAsync();
             await _identityTransaction.CommitAsync();
             await _subscriptionTransaction.CommitAsync();
+            await _taskTransaction.CommitAsync();
         }
 
         public async Task RollBackTransaction()
@@ -49,6 +54,7 @@ namespace Employees.Infrastructure
             await _companyTransaction.RollbackAsync();
             await _identityTransaction.RollbackAsync();
             await _subscriptionTransaction.RollbackAsync();
+            await _taskTransaction.RollbackAsync();
         }
 
         public void Dispose()
@@ -57,6 +63,7 @@ namespace Employees.Infrastructure
             if (_companyTransaction is not null) _companyTransaction.Dispose();
             if (_identityTransaction is not null) _identityTransaction.Dispose();
             if (_subscriptionTransaction is not null) _subscriptionTransaction.Dispose();
+            if (_taskTransaction is not null) _taskTransaction.Dispose();
         }
 
         public async Task SaveAsync()
@@ -79,6 +86,7 @@ namespace Employees.Infrastructure
             await _companyContext.SaveChangesAsync();
             await _identityContext.SaveChangesAsync();
             await _subscriptionContext.SaveChangesAsync();
+            await _taskContext.SaveChangesAsync();
         }
     }
 }

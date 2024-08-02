@@ -13,11 +13,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\app\" />
-    <Folder Include="src\common\" />
     <Folder Include="src\features\authentication\signUpEmployee\" />
     <Folder Include="src\features\Employer\dashboard\" />
     <Folder Include="src\features\Employee\dashboardEmployees\" />
-    <Folder Include="src\features\Employer\tasks\" />
     <Folder Include="src\features\Employer\companies\" />
+    <Folder Include="src\features\Employer\tasksCompanies\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptConfiguration Remove="src\common\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\common\**" />
   </ItemGroup>
 </Project>

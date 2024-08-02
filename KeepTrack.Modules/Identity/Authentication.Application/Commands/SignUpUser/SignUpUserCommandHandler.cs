@@ -51,7 +51,7 @@ namespace ApplicationIdentity.Application.Commands.SignUpUser
             await _mediator.Publish<UserHasBeenSignedUpMessage>(new UserHasBeenSignedUpMessage
             {
                 UserId = user.Id,
-                UserName = request.Name,
+                Name= request.Name,
             });
 
             await _unitOfWork.SaveAsync();

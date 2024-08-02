@@ -12,6 +12,7 @@
     <ProjectReference Include="..\KeepTrack.Modules\Employees\Employees.Infrastructure\Employees.Infrastructure.csproj" />
     <ProjectReference Include="..\KeepTrack.Modules\Identity\Authentication.Infastructure\Authentication.Infastructure.csproj" />
     <ProjectReference Include="..\Subscription.Infrastructure\Subscription.Infrastructure.csproj" />
+    <ProjectReference Include="..\KeepTrack.Modules\Tasks\Task.Infrastructure\TaskManagment.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,43 +1,60 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using TaskManagment.Application.Commands.AddBoard;
+using TaskManagment.Application.Commands.AddTask;
+using TaskManagment.Application.Commands.ReorderBoards;
+using TaskManagment.Application.Commands.UpdateBoard;
+using TaskManagment.Application.Queries.GetAllBoardsInfo;
+using TaskManagment.Application.Queries.GetAllBoardsInfo.DTOs;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace Task.Api.Controllers
+namespace TaskManagment.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/")]
     [ApiController]
-    public class TaskController : ControllerBase
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    public class TasksController : ControllerBase
     {
-        // GET: api/<TaskController>
+        private readonly IMediator _mediator;
+
+        public TasksController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("boards")]
+        public async System.Threading.Tasks.Task<List<BoardDTO>> Boards(string company)
         {
-            return new string[] { "value1", "value2" };
-        }
+            return await _mediator.Send<List<BoardDTO>>(new GetAllBoardsInfoQuery
+            {
+                CompanyName = company
+            });
+        } 
 
-        // GET api/<TaskController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<TaskController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("boards")]
+        public async System.Threading.Tasks.Task<IActionResult> Boards(AddBoardCommand command)
         {
+            await _mediator.Send(command);
+            return Ok();
         }
 
-        // PUT api/<TaskController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        [Route("boards")]
+        public async System.Threading.Tasks.Task<IActionResult> Boards(UpdateBoardCommand command)
         {
+            await _mediator.Send(command);
+            return Ok();
         }
 
-        // DELETE api/<TaskController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+
+        [HttpPut]
+        [Route("boards/order")]
+        public async System.Threading.Tasks.Task<IActionResult> Boards(ReorderBoardsCommand command)
         {
+            await _mediator.Send(command);
+            return Ok();
         }
     }
 }

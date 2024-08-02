@@ -1,16 +1,30 @@
-import React from 'react';
-import { useState } from 'react';
-import Board from '../../../components/kanban/Board/Board';
-import { DragDropContext } from "react-beautiful-dnd";
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../app/store';
+import Board from '../../kanban/Board/Board';
+import { DragDropContext, Droppable, Draggable, DroppableProvided, DraggableProvided, DropResult } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
-import Editable from "../../../components/kanban/Editable/Editable";
+import Editable from "../../kanban/Editable/Editable";
+import { addBoard, fetchAllBoards, reorderBoard } from './tasksPageSlice';
+import { useParams } from 'react-router-dom';
+import Grid from '@mui/material/Grid';
 
 function TasksPage() {
     const [data, setData]: any = useState([]);
+    const dispatch = useDispatch<AppDispatch>();
+    const { company } = useParams<string>();
+/*    const  company  = useParams<string>();*/
+    const nextOrderValue = useSelector((x: any) => x.tasks.boards.entities.length + 1);
+    const boards = useSelector((x: any) => x.tasks.boards.entities);
+    const cards = useSelector((x: any) => x.tasks.cards.entities);
+
+    useEffect(() => {
+        if (boards.length == 0) dispatch(fetchAllBoards(company));
+    });
 
     const setName = (title: any, bid: any) => {
         const index = data.findIndex((item: any) => item.id === bid);
-        const tempData : any = [...data];
+        const tempData: any = [...data];
         tempData[index].boardName = title;
         setData(tempData);
     };
@@ -33,8 +47,7 @@ function TasksPage() {
         return tempData;
     };
 
-
-    const addCard = (title: any, bid: any) => {
+    const addCard = async (title: any, bid: any) => {
         const index = data.findIndex((item: any) => item.id === bid);
         const tempData: any = [...data];
         tempData[index].card.push({
@@ -44,6 +57,7 @@ function TasksPage() {
             task: [],
         });
         setData(tempData);
+
     };
 
     const removeCard = (boardId: any, cardId: any) => {
@@ -55,14 +69,14 @@ function TasksPage() {
         setData(tempData);
     };
 
-    const addBoard = (title: any) => {
-        const tempData: any = [...data];
-        tempData.push({
-            id: uuidv4(),
-            boardName: title,
-            card: [],
-        });
-        setData(tempData);
+    const addBoardHandler = (title: any) => {
+        const board = {
+            title: title,
+            order: nextOrderValue,
+            company,
+            cards: []
+        };
+        dispatch(addBoard(board));
     };
 
     const removeBoard = (bid: any) => {
@@ -72,13 +86,16 @@ function TasksPage() {
         setData(tempData);
     };
 
-    const onDragEnd = (result: any) => {
-        const { source, destination } = result;
+    const onDragEnd = (result: DropResult) => {
+        const { source, destination, type, draggableId } = result;
         if (!destination) return;
 
-        if (source.droppableId === destination.droppableId) return;
+/*        if (source.droppableId === destination.droppableId) return;*/
 
-        setData(dragCardInBoard(source, destination));
+        if (type == "board") {
+            dispatch(reorderBoard({ boardid: draggableId, destinationOrder: destination.index, sourceOrder: source.index, company: company }));
+        }
+        /*      setData(dragCardInBoard(source, destination));*/
     };
 
     const updateCard = (bid: any, cid: any, card: any) => {
@@ -95,36 +112,74 @@ function TasksPage() {
         console.log(tempBoards);
         setData(tempBoards);
     };
-  return (
-      <DragDropContext onDragEnd={onDragEnd}>
-          <div className="App">
-              <div className="app_outer">
-                  <div className="app_boards">
-                      {data.map((item: any) => (
-                          <Board
-                              key={item.id}
-                              id={item.id}
-                              name={item.boardName}
-                              card={item.card}
-                              setName={setName}
-                              addCard={addCard}
-                              removeCard={removeCard}
-                              removeBoard={removeBoard}
-                              updateCard={updateCard}
-                          />
-                      ))}
-                      <Editable
-                          class={"add__board"}
-                          name={"Add Board"}
-                          btnName={"Add Board"}
-                          onSubmit={addBoard}
-                          placeholder={"Enter Board  Title"}
-                      />
-                  </div>
-              </div>
-          </div>
-      </DragDropContext>
-  );
+    return (
+        <DragDropContext onDragEnd={onDragEnd}>
+            <div className="App">
+                <div className="app_outer">
+                    <div className="app_boards">
+                        
+                            <Droppable droppableId="all-boards" direction="horizontal" type="board">
+                                {(provided: DroppableProvided) => (
+
+                                <Grid container style={{ flexWrap: 'nowrap' }} {...provided.droppableProps} ref={provided.innerRef} spacing={2}>
+                                
+                                    {boards.map((item: any, index: any) => {
+
+                                            const itemCards = item.cards.map((el: any, index: any) => cards[el.id]);
+
+                                            return (
+
+
+                                                <Draggable draggableId={item.id} index={item.order} key={item.id}>
+
+
+                                                    {(provided: DraggableProvided) => (
+
+
+                                                        <Grid item style={{ width: "300px" }}   {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                                                            <Board
+                                                                key={item.id ?? item.title}
+                                                                id={item.id ?? item.title}
+                                                                name={item.title}
+                                                                card={itemCards}
+                                                                setName={setName}
+                                                                addCard={addCard}
+                                                                removeCard={removeCard}
+                                                                removeBoard={removeBoard}
+                                                                updateCard={updateCard}
+                                                            />
+                                                        </Grid>
+
+                                                    )}
+
+
+                                                </Draggable>
+                                            )
+
+
+                                        })}
+                                        {provided.placeholder}
+                                
+                                </Grid>
+
+                                )}
+
+                            </Droppable>
+                     
+
+
+                        <Editable
+                            class={"add__board"}
+                            name={"Add Board"}
+                            btnName={"Add Board"}
+                            onSubmit={addBoardHandler}
+                            placeholder={"Enter Board  Title"}
+                        />
+                    </div>
+                </div>
+            </div>
+        </DragDropContext>
+    );
 }
 
 export default TasksPage;

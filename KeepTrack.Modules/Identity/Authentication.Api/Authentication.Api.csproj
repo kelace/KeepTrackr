@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="Services\Authentication\Models\" />
-    <Folder Include="EventHandlers\" />
   </ItemGroup>
 
   <ItemGroup>

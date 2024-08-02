@@ -19,6 +19,8 @@ using Companies.Api.Extensions;
 using Companies.Application.InternalEventHandlers;
 using Subscription.Api.Extensions;
 using Subscription.Application.Commands.SubscribeUser;
+using TaskManagment.Api.Extension;
+using Task.Application.ExternalEventHandlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +32,7 @@ mvcBuilder.AddAuthorizationPart(connectionString);
 mvcBuilder.AddEmployeeModule(connectionString);
 mvcBuilder.AddCompanyModule(connectionString);
 mvcBuilder.AddSubscriptionPart(connectionString);
+mvcBuilder.AddTaskModule(connectionString);
 
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>) );
 
@@ -50,6 +53,7 @@ mvcBuilder.Services.AddMediatR((cfg) =>
     cfg.RegisterServicesFromAssembly(typeof(GetAllEmployeesQuery).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(OwnerHasBeenSignedUpHandler).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(SubscribeUserCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(EmployeeInvitedEventHandler).Assembly);
 });
 var ReactOrigin = "ReactOrigin";
 
@@ -145,5 +149,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 app.Run();
