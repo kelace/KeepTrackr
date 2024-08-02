@@ -7,6 +7,7 @@ import dashboardReducer from "../features/Employer/dashboard/dashboardSlice";
 import employeesReducer from "../features/Employer/employee/employeesSlice";
 import { useDispatch } from "react-redux";
 import companiesReducer from "../features/Employer/companies/CompaniesSlice";
+import subscriptionReducers from '../features/Employer/subscription/SubscriptionSlice';
 
 const token = localStorage.getItem('token');
 
@@ -42,6 +43,7 @@ const store = configureStore({
         dashboard: dashboardReducer,
         employerEmployees: employeesReducer,
         companies: companiesReducer,
+        subscription: subscriptionReducers
 
     },
     preloadedState: {

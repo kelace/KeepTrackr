@@ -17,7 +17,7 @@ namespace Authorization.Infastructure
         public DbSet<Mail> Mails { get; set; }
         public AuthContext(DbContextOptions<AuthContext> options) : base(options)
         {
-            //Database.Migrate();
+            Database.Migrate();
         }
 
 

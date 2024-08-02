@@ -9,7 +9,20 @@ namespace Subscription.Domain.Users
 {
     public class SubscriptionItem : EntityBase
     {
-        public string Type { get; set; }
+        public string Type { get; private set; }
         public Guid UserId { get; private set; }
+
+        public SubscriptionItem(string type, Guid userId)
+        {
+            Id = Guid.NewGuid();
+            Type = type;
+            UserId = userId;
+        }
+
+        public void ChangeSubscription(string type)
+        {
+            this.Type = type;
+        }
     }
+
 }

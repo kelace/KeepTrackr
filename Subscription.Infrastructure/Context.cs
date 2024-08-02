@@ -14,7 +14,7 @@ namespace Subscription.Infrastructure
     {
         public SubscriptionContext(DbContextOptions<SubscriptionContext> options) : base(options)
         {
-
+            Database.Migrate();
         }
 
         public DbSet<User> Users { get; set; }

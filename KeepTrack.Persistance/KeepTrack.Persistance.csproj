@@ -11,6 +11,7 @@
     <ProjectReference Include="..\KeepTrack.Modules\Company\Companies.Infrastructure\Companies.Infrastructure.csproj" />
     <ProjectReference Include="..\KeepTrack.Modules\Employees\Employees.Infrastructure\Employees.Infrastructure.csproj" />
     <ProjectReference Include="..\KeepTrack.Modules\Identity\Authentication.Infastructure\Authentication.Infastructure.csproj" />
+    <ProjectReference Include="..\Subscription.Infrastructure\Subscription.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

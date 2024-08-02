@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Subscription.Application.Commands.SubscribeUser;
+using Subscription.Application.Queries.GetAllSubscriptions;
 
 namespace Subscription.Api.Controllers
 {
@@ -16,10 +18,18 @@ namespace Subscription.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpPut]
+        public async Task<IActionResult> Put(SubscribeUserCommand command)
         {
-            return new string[] { "value1", "value2" };
+            await _mediator.Send(command);
+
+            return Ok(new {type = command.Type});
+        }
+
+        [HttpGet]
+        public async Task<List<SubscriptionDTO>> Get()
+        {
+            return await _mediator.Send<List<SubscriptionDTO>>( new GetAllSubscriptionsQuery());
         }
     }
 }

@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Subscription.Domain.Users
 {
-    internal interface IUserRepository
+    public interface IUserRepository
     {
+        Task<User> Get(Guid id);
+        Task AddAsync(User user);
+        void Update(User user);
     }
 }

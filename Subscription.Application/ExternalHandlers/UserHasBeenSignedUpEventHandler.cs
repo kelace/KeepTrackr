@@ -1,5 +1,6 @@
 ﻿using Authorization.Messages;
 using MediatR;
+using Subscription.Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,20 @@ namespace Subscription.Application.ExternalHandlers
 {
     public class UserHasBeenSignedUpEventHandler : INotificationHandler<UserHasBeenSignedUpMessage>
     {
-        public Task Handle(UserHasBeenSignedUpMessage notification, CancellationToken cancellationToken)
+        private readonly IUserRepository _userRepository;
+
+        public UserHasBeenSignedUpEventHandler(IUserRepository userRepository)
         {
-            throw new NotImplementedException();
+            _userRepository = userRepository;
+        }
+
+        public async Task Handle(UserHasBeenSignedUpMessage notification, CancellationToken cancellationToken)
+        {
+            var user = User.CreateUser(notification.UserId, notification.UserName);
+
+            user.SubscribeToNormal();
+
+            await _userRepository.AddAsync(user);
         }
     }
 }
