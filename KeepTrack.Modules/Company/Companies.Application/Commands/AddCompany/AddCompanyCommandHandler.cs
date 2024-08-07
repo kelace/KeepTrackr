@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Companies.Application.Commands.AddCompany
 {
-    public class AddCompanyCommandHandler : IRequestHandler<AddCompanyCommand, Result<Company, Error>>
+    public class AddCompanyCommandHandler : IRequestHandler<AddCompanyCommand, Result<Company, KeepTrack.Common.Error>>
     {
         private readonly IOwnerRepository _ownerRepository;
         private readonly IUserContext _userContext;
@@ -21,7 +21,7 @@ namespace Companies.Application.Commands.AddCompany
             _userContext = userContext;
             _unitOfWork = unitOfWork;
         }
-        public async Task<Result<Company, Error>> Handle(AddCompanyCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Company, KeepTrack.Common.Error>> Handle(AddCompanyCommand request, CancellationToken cancellationToken)
         {
             var owner = await _ownerRepository.Get(_userContext.GetCrrentUserId);
 

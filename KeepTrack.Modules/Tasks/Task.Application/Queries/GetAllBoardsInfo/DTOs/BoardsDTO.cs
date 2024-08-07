@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace TaskManagment.Application.Queries.GetAllBoardsInfo.DTOs
 {
-    public class CardDTO
+    public class BoardsDTO
     {
-        public Guid Id { get; set; }
-        public Guid BoardId { get; set; }
-        public string Title { get; set; }
-        public int Order { get; set; }
+        public List<BoardDTO> Boards { get; set; } = new List<BoardDTO>();
+        public List<CardDTO> Cards { get; set; } = new List<CardDTO>();
     }
 }

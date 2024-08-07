@@ -24,12 +24,14 @@ namespace TaskManagment.Api.Controllers
 
         [HttpGet]
         [Route("boards")]
-        public async System.Threading.Tasks.Task<List<BoardDTO>> Boards(string company)
+        public async System.Threading.Tasks.Task<BoardsDTO> Boards(string company)
         {
-            return await _mediator.Send<List<BoardDTO>>(new GetAllBoardsInfoQuery
+            var res =  await _mediator.Send<BoardsDTO>(new GetAllBoardsInfoQuery
             {
                 CompanyName = company
             });
+
+            return res;
         } 
 
         [HttpPost]

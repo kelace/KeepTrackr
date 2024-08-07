@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Employees.Domain.Base
+namespace KeepTrack.Common
 {
-    public record Error(string Code, string Description = null);
+    public record Error(string code, string description);
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Companies.Application.Commands.AddCompany
 {
-    public class AddCompanyCommand : IRequest<Result<Company, Error>>, IApplicationCommand
+    public class AddCompanyCommand : IRequest<Result<Company, KeepTrack.Common.Error>>, IApplicationCommand
     {
         public string Name { get; set; }
     }

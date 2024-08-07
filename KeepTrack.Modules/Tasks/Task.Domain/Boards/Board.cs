@@ -27,12 +27,12 @@ namespace TaskManagment.Domain.Boards
             Title = title;
             Order = order;
         }
-        public Card AddCard(string title)
-        {
-            if (CardsCount >= MaxCardsAllowed) throw new Exception("asdasd");
-            CardsCount++;
-            return Card.CreateCard(title, CompanyId.CompanyName, CompanyId.CompanyOwnerId);
-        }
+        //public Card AddCard(string title)
+        //{
+        //    if (CardsCount >= MaxCardsAllowed) throw new Exception("asdasd");
+        //    CardsCount++;
+        //    return Card.CreateCard(title, CompanyId.CompanyName, CompanyId.CompanyOwnerId);
+        //}
 
         internal static Board CreateBoard(string title, string companyName, Guid companyOwner, int order)
         {

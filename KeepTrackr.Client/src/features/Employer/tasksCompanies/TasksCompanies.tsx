@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
@@ -19,33 +19,33 @@ function TasksCompanies() {
     const companies = useSelector((x: any) => x.companies.companies);
     const dispatch = useDispatch<AppDispatch>();
 
-    useEffect(() => { 
+    useEffect(() => {
         (async () => {
             await dispatch(getAllCompanies());
         })();
     }, []);
 
-  return (
-      <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-          <nav aria-label="secondary mailbox folders">
-              <List>
+    return (
+        <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+            <nav aria-label="secondary mailbox folders">
+                <List>
 
+                    {companies.map((company: any) =>
 
-                  {companies.map((company: any) => 
-                      <Link to={`/tasks/${company.name}`} component={RouterLink} key={company.id}>
-                       
-                          <ListItem disablePadding>
-                              {company.name}
-                          </ListItem>
+                        <Link to={`/tasks/${company.name}`} component={RouterLink} key={company.id}>
 
-                      </Link>
+                            <ListItem disablePadding>
+                                {company.name}
+                            </ListItem>
 
-                          )}
+                        </Link>
 
-              </List>
-          </nav>
-      </Box>
-  );
+                    )}
+
+                </List>
+            </nav>
+        </Box>
+    );
 }
 
 export default TasksCompanies;

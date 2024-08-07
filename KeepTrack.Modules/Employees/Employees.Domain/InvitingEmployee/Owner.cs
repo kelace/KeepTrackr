@@ -19,8 +19,8 @@ namespace Employees.Domain.InvitingEmployee
         }
         public Result<InivtationResultInfo, Error> InviteNewEmployee(string email, string name)
         {
-            if (IsEmployeeExist(name)) return new Error("");
-            if (!IsOwnerFitInAllowedCompanyCount()) return new Error("");
+            if (IsEmployeeExist(name)) return new Error("", "");
+            if (!IsOwnerFitInAllowedCompanyCount()) return new Error("", "");
 
             //var company = GetCompany(companyId);
             var employee = new Employee(Guid.NewGuid()) { Email = email, Name = name, OwnerId = Id };

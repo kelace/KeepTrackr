@@ -4,12 +4,25 @@ import { AxiosError } from 'axios';
 import httpClient from '../../../app/httpClient';
 import { useSelector } from 'react-redux';
 
-
 interface Board {
-    id: string,
+    id: string | undefined,
     title: string,
     order: number
 };
+
+interface Card {
+    id?: string | undefined,
+    title: string,
+    order: number,
+    boardId: string
+}
+
+interface AddCardRequest {
+    title: string,
+    order: number,
+    boardId: string,
+    companyName: string | undefined
+}
 
 interface ReorderBoard {
     boardid: string,
@@ -17,6 +30,32 @@ interface ReorderBoard {
     destinationOrder: number,
     company: string | undefined
 };
+
+interface ReorderCard{
+    boardId: string,
+    cardId: string,
+    sourceOrder: number,
+    destinationOrder: number,
+    company: string | undefined
+};
+
+export const reorderCard = createAsyncThunk('tasks/reorderCard', async (board: ReorderCard) => {
+
+    const token = localStorage.getItem('token');
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    };
+
+    /*    const boards = useSelector((x : any) => x.state.boards.entities);*/
+    const result = httpClient.put('api/tasks/boards/cards', board, config);
+
+    return board;
+
+});
+
 
 export const reorderBoard = createAsyncThunk('tasks/reorderBoard', async (board: ReorderBoard) => {
 
@@ -32,6 +71,23 @@ export const reorderBoard = createAsyncThunk('tasks/reorderBoard', async (board:
     const result = httpClient.put('api/tasks/boards/order', board, config);
 
     return board;
+
+});
+
+export const addCard = createAsyncThunk('tasks/addCard', async (card: AddCardRequest,) => {
+
+    const token = localStorage.getItem('token');
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    };
+
+    const result = await httpClient.post('api/tasks/boards/cards', card, config);
+
+    return result.data;
+
 
 });
 
@@ -102,14 +158,14 @@ const slice = createSlice({
     initialState: initialState,
     extraReducers(builder) {
         builder.addCase(fetchAllBoards.fulfilled, (state: any, action: any) => {
-            state.boards.entities = action.payload;
+            state.boards.entities = action.payload.boards;
+            state.cards.entities = action.payload.cards;
         });
 
         builder.addCase(reorderBoard.fulfilled, (state: any, action: any) => {
             const board = state.boards.entities.find((el: any) => el.id == action.payload.boardid);
 
             board.order = action.payload.destinationOrder;
-
 
            /* state.boards.entities[action.payload.id].order = */
             state.boards.entities.sort((a: any, b: any) => a.order > b.order ? 1 : -1);
@@ -126,6 +182,20 @@ const slice = createSlice({
                 }
                 return false;
             });
+        });
+
+        builder.addCase(addCard.fulfilled, (state: any, action: any) => {
+            state.cards.entities.push(action.payload);
+        });
+
+        builder.addCase(reorderCard.fulfilled, (state: any, action: any) => {
+
+            const cards = state.cards.entities.find((el: any) => el.id == action.payload.boardid);
+
+            cards.order = action.payload.destinationOrder;
+
+            state.cards.entities.sort((a: any, b: any) => a.order > b.order ? 1 : -1);
+
         });
     }
 });

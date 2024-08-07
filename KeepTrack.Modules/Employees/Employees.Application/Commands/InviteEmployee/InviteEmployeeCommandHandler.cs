@@ -9,7 +9,7 @@ using Microsoft.Data.SqlClient;
 
 namespace Employees.Application.Commands.InviteEmployee
 {
-    public class InviteEmployeeCommandHandler : IRequestHandler<InviteEmployeeComand, Result<InivtationResultInfo, Error>>
+    public class InviteEmployeeCommandHandler : IRequestHandler<InviteEmployeeComand, Result<InivtationResultInfo, KeepTrack.Common.Error>>
     {
         private IOwnerRepository _ownerRepository;
         private IUserContext _userContext;
@@ -20,7 +20,7 @@ namespace Employees.Application.Commands.InviteEmployee
             _userContext = userContext;
             _unitOfWork = unitOfWork;
         }
-        public async Task<Result<InivtationResultInfo, Error>> Handle(InviteEmployeeComand request, CancellationToken cancellationToken)
+        public async Task<Result<InivtationResultInfo, KeepTrack.Common.Error>> Handle(InviteEmployeeComand request, CancellationToken cancellationToken)
         {
             var currentUserId = _userContext.GetCrrentUserId;
             var owner = await _ownerRepository.GetAsync(currentUserId);

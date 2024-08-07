@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskManagment.Domain;
 using TaskManagment.Domain.Boards;
+using TaskManagment.Domain.Cards;
 using TaskManagment.Domain.Companies;
 using TaskManagment.Domain.Executors;
 using TaskManagment.Infrastructure.Persistance;
@@ -18,6 +19,7 @@ namespace TaskManagment.Api.Extension
             builder.Services.AddTransient<ITaskRepository, TaskRepository>();
             builder.Services.AddTransient<IBoardRepository, BoardRepository>();
             builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
+            builder.Services.AddTransient<ICardRepository, CardRepository>();
             return builder;
         }
     }

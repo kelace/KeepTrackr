@@ -5,7 +5,7 @@ import Board from '../../kanban/Board/Board';
 import { DragDropContext, Droppable, Draggable, DroppableProvided, DraggableProvided, DropResult } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
 import Editable from "../../kanban/Editable/Editable";
-import { addBoard, fetchAllBoards, reorderBoard } from './tasksPageSlice';
+import { addBoard, fetchAllBoards, reorderBoard, reorderCard } from './tasksPageSlice';
 import { useParams } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 
@@ -95,6 +95,10 @@ function TasksPage() {
         if (type == "board") {
             dispatch(reorderBoard({ boardid: draggableId, destinationOrder: destination.index, sourceOrder: source.index, company: company }));
         }
+
+        if (type == "card") {
+            dispatch(reorderCard({ boardId: destination.droppableId, cardId: draggableId, destinationOrder: destination.index, sourceOrder: source.index, company: company }));
+        }
         /*      setData(dragCardInBoard(source, destination));*/
     };
 
@@ -125,23 +129,16 @@ function TasksPage() {
                                 
                                     {boards.map((item: any, index: any) => {
 
-                                            const itemCards = item.cards.map((el: any, index: any) => cards[el.id]);
-
                                             return (
-
-
                                                 <Draggable draggableId={item.id} index={item.order} key={item.id}>
 
-
                                                     {(provided: DraggableProvided) => (
-
 
                                                         <Grid item style={{ width: "300px" }}   {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
                                                             <Board
                                                                 key={item.id ?? item.title}
                                                                 id={item.id ?? item.title}
                                                                 name={item.title}
-                                                                card={itemCards}
                                                                 setName={setName}
                                                                 addCard={addCard}
                                                                 removeCard={removeCard}

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Employees.Application.Commands.InviteEmployee
 {
-    public class InviteEmployeeComand : IRequest<Result<InivtationResultInfo, Error>>, IApplicationCommand
+    public class InviteEmployeeComand : IRequest<Result<InivtationResultInfo, KeepTrack.Common.Error>>, IApplicationCommand
     {
         public string Name { get; set; }
         public string Email { get; set; }

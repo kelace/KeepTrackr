@@ -25,7 +25,7 @@ namespace Employees.Api.Controllers
         [Authorize]
         public async Task<OkObjectResult> Post(InviteEmployeeComand command)
         {
-            var result =  await _mediator.Send<Result<InivtationResultInfo, Error>>(command);
+            var result =  await _mediator.Send<Result<InivtationResultInfo, KeepTrack.Common.Error>>(command);
 
            return result.Match<OkObjectResult>(x => Ok(new { success = true, email = x.Email, employee = new { name = x.Name, mailId = x.MailId, employeeId = x.EmployeeId } }), x => Ok(new { succes = false, email = "" }));
         }
