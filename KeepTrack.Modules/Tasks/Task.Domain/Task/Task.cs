@@ -13,17 +13,10 @@ namespace TaskManagment.Domain
         public DateTime Created { get; private set; }
         public DateTime Updated { get; private set; }
         public Guid AssignedTo { get;  private set; }
-        public List<LabelLineItem> Labels { get; private set; }
 
         public void AssignExecutorToTask(Guid id)
         {
             AssignedTo = id;
-        }
-
-        public void AddLabel(LabelLineItem item)
-        {
-            if (Labels.Count > 10) throw new Exception("asdasd");
-            Labels.Add(item);
         }
 
         //public static Task CreateEmpty(CompanyId companyId)

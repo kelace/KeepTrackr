@@ -57,6 +57,7 @@ export const reorderCard = createAsyncThunk('tasks/reorderCard', async (board: R
 });
 
 
+
 export const reorderBoard = createAsyncThunk('tasks/reorderBoard', async (board: ReorderBoard) => {
 
     const token = localStorage.getItem('token');
@@ -135,17 +136,30 @@ export const fetchAllBoards = createAsyncThunk('tasks/fetchBoards', async (compa
 //};
 
 const initialState = {
+
+    openedCardId: '',
+
+    openedLabelModal: false,
+
     newBoard: {
-        title:""
+        title:''
     },
+
     boards: {
         ids: [],
         entities: []
     },
+
     cards: {
         ids: [],
         entities: []
+    },
+
+    labels: {
+        ids: [],
+        entities: []
     }
+
 };
 
 const slice = createSlice({
@@ -153,13 +167,27 @@ const slice = createSlice({
     reducers: {
         changeNewBoardName: (state : any, action : any) => {
             state.newBoard = action.payload;
+        },
+
+        openCard: (state: any, action: any) => {
+            state.openedCardId = action.payload
+        },
+
+        openLabel: (state: any) => {
+            state.openedLabelModal = true;
+        },
+
+        closeLabel: (state: any) => {
+            state.openedLabelModal = false;
         }
     },
+
     initialState: initialState,
     extraReducers(builder) {
         builder.addCase(fetchAllBoards.fulfilled, (state: any, action: any) => {
             state.boards.entities = action.payload.boards;
             state.cards.entities = action.payload.cards;
+            state.labels.entities = action.payload.labels;
         });
 
         builder.addCase(reorderBoard.fulfilled, (state: any, action: any) => {
@@ -199,6 +227,6 @@ const slice = createSlice({
         });
     }
 });
-export const { changeNewBoardName } = slice.actions;
+export const { changeNewBoardName, openCard, openLabel, closeLabel } = slice.actions;
 
 export default slice.reducer;

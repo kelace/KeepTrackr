@@ -29,11 +29,12 @@ namespace TaskManagment.Application.Queries.GetAllBoardsInfo
                             
                             select * from task.Boards b
                             left join ( select *, row_number() OVER (ORDER BY ci.[order]) as no from task.Cards as ci) as c on b.Id = c.BoardId                              
+                            left join task.label as l on c.Id = l.CardId                              
                             where b.CompanyId_CompanyName = @CompanyName and b.CompanyId_CompanyOwnerId = @OwnerId
                             order by [b].[ORDER] asc
                             ";
 
-                BoardsDTO JoinMap(BoardDTO board, CardDTO card)
+                BoardsDTO JoinMap(BoardDTO board, CardDTO card, LabelDTO label)
                 {
                   
                     var boards = new BoardsDTO();
@@ -44,13 +45,18 @@ namespace TaskManagment.Application.Queries.GetAllBoardsInfo
 
                     boards.Cards.Add(card);
 
+                    if (label is null) return boards;
+
+                    boards.Labels.Add(label);
+
                     return boards;
                 }
 
-                var result = await connection.QueryAsync<BoardDTO, CardDTO, BoardsDTO>(sql, JoinMap, new { CompanyName = request.CompanyName, OwnerId = _userContext.GetCrrentUserId });
+                var result = await connection.QueryAsync<BoardDTO, CardDTO, LabelDTO, BoardsDTO>(sql, JoinMap, new { CompanyName = request.CompanyName, OwnerId = _userContext.GetCrrentUserId });
 
                 var boards = result.SelectMany(x => x.Boards).GroupBy(x => x.Id).Select(x => x.First()).ToList();
                 var cards = result.SelectMany(x => x.Cards).GroupBy(x => x.Id).Select(x => x.First()).ToList();
+                var labels = result.SelectMany(x => x.Labels).GroupBy(x => x.Id).Select(x => x.First()).ToList();
 
 
                 //return boards.GroupBy(x => new {x.Boards, x.Cards}).Select(b =>
@@ -63,7 +69,8 @@ namespace TaskManagment.Application.Queries.GetAllBoardsInfo
                 return new BoardsDTO
                 {
                     Boards = boards,
-                    Cards = cards
+                    Cards = cards,
+                    Labels = labels
                 };
             }
         }

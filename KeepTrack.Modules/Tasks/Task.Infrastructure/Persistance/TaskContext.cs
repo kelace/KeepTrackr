@@ -10,7 +10,6 @@ using TaskManagment.Domain.Boards;
 using TaskManagment.Domain.Cards;
 using TaskManagment.Domain.Companies;
 using TaskManagment.Domain.Executors;
-using TaskManagment.Domain.Labels;
 
 namespace TaskManagment.Infrastructure.Persistance
 {
@@ -21,10 +20,10 @@ namespace TaskManagment.Infrastructure.Persistance
             Database.Migrate();
         }
 
-        public DbSet<Board> Boards { get; set; }
+        public DbSet<Column> Boards { get; set; }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Executor> Executors { get; set; }
-        public DbSet<Company> Companies { get; set; }
+        public DbSet<Desk> Companies { get; set; }
         public DbSet<Domain.Task> Tasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,7 +32,7 @@ namespace TaskManagment.Infrastructure.Persistance
 
             modelBuilder.Ignore<EntityBase>();
 
-            modelBuilder.Entity<Company>(x =>
+            modelBuilder.Entity<Desk>(x =>
             {
                 x.Ignore(x => x.Events);
                 x.Ignore(x => x.Id);
@@ -46,7 +45,7 @@ namespace TaskManagment.Infrastructure.Persistance
                 x.Property(x => x.ExecutorType).HasConversion<int>();
             });
 
-            modelBuilder.Entity<Board>(x =>
+            modelBuilder.Entity<Column>(x =>
             {
                 x.Ignore(x => x.Events);
                 x.OwnsOne(x => x.CompanyId);
@@ -56,22 +55,16 @@ namespace TaskManagment.Infrastructure.Persistance
             {
                 x.Ignore(x => x.Events);
                 x.OwnsOne(x => x.CompanyId);
+                x.HasMany<Label>().WithOne().HasForeignKey(x => x.CardId);
             });
 
             modelBuilder.Entity<Domain.Task>(x =>
             {
                 x.Ignore(x => x.Events);
                 x.HasOne<Executor>().WithOne().HasForeignKey<Domain.Task>(x => x.AssignedTo);
-                x.HasMany(x => x.Labels).WithOne().HasForeignKey(x => x.TaskId);
             });
 
             modelBuilder.Entity<Label>(x =>
-            {
-                x.Ignore(x => x.Events);
-                x.HasOne<LabelLineItem>().WithOne().HasForeignKey<LabelLineItem>(x => x.LabelId);
-            });
-
-            modelBuilder.Entity<LabelLineItem>(x =>
             {
                 x.Ignore(x => x.Events);
             });

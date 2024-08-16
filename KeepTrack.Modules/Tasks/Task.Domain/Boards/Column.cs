@@ -8,7 +8,7 @@ using TaskManagment.Domain.Cards;
 
 namespace TaskManagment.Domain.Boards
 {
-    public class Board : EntityBase, IAggregateRoot
+    public class Column : EntityBase, IAggregateRoot
     {
         public string Title { get; private set; }
         public DateTime Created { get; private set; }
@@ -34,9 +34,9 @@ namespace TaskManagment.Domain.Boards
         //    return Card.CreateCard(title, CompanyId.CompanyName, CompanyId.CompanyOwnerId);
         //}
 
-        internal static Board CreateBoard(string title, string companyName, Guid companyOwner, int order)
+        internal static Column CreateBoard(string title, string companyName, Guid companyOwner, int order)
         {
-            return new Board
+            return new Column
             {
                 Id = Guid.NewGuid(),
                 Title = title,

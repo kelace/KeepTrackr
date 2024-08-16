@@ -13,6 +13,7 @@ namespace TaskManagment.Domain.Cards
         public Guid BoardId { get; private set; }
         public DateTime Created { get; private set; }
         public CompanyId CompanyId { get; private set; }
+        public List<Label> Labels { get; private set; }
         public int Order { get; private set; }
         public void Reorder(int order)
         {

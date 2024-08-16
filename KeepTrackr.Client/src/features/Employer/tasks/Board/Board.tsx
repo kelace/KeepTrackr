@@ -6,10 +6,11 @@ import { MoreHorizontal } from "react-feather";
 import Editable from "../Editable/Editable";
 import Dropdown from "../Dropdown/Dropdown";
 import { Droppable } from 'react-beautiful-dnd';
-import { addCard } from '../../Employer/tasks/tasksPageSlice';
+import { addCard } from '../tasksPageSlice';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../.../../../../app/store';
+import { AppDispatch } from '../../../../app/store';
 import { useParams } from 'react-router-dom';
+
 
 export default function Board(props: any) {
     const [show, setShow] = useState(false);
@@ -17,13 +18,23 @@ export default function Board(props: any) {
     const [title, setTitle] = useState("");
     const dispatch = useDispatch<AppDispatch>();
 
-    const cardss = useSelector((x: any) => x.tasks.cards.entities);
+    //const cards = useSelector((x: any) => x.tasks.cards.entities.filter((el: any) => {
 
-    const cards = useSelector((x: any) => x.tasks.cards.entities.filter((el: any) => {
+    //    if (el.boardId == props.id) return el;
 
-        if (el.boardId == props.id) return el;
+    //}));
 
-    }));
+
+    const cards = useSelector((x: any) => {
+        let c = Array.from(x.tasks.cards.entities);
+        c.sort((x: any, y: any) => x.order > y.order ? 1 : -1);
+
+        return c.filter((el: any) => {
+
+            if (el.boardId == props.id) return el;
+
+        });
+    });
 
     const { company } = useParams();
 
@@ -72,7 +83,7 @@ export default function Board(props: any) {
                             className="board__title"
                         >
                             {props?.name || "Name of Board"}
-                                <span className="total__cards">{cards?.length}</span>
+                            <span className="total__cards">{cards?.length}</span>
                         </p>
                     </div>
                 )}
@@ -82,6 +93,7 @@ export default function Board(props: any) {
                     }}
                 >
                     <MoreHorizontal />
+
                     {dropdown && (
                         <Dropdown
                             class="board__dropdown"
@@ -90,6 +102,7 @@ export default function Board(props: any) {
                             }}
                         >
                             <p onClick={() => props.removeBoard(props.id)}>Delete Board</p>
+
                         </Dropdown>
                     )}
                 </div>

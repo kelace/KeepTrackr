@@ -11,11 +11,11 @@ namespace TaskManagment.Application.Commands.ReorderBoards
 {
     public class ReorderBoardsCommandHandler : IRequestHandler<ReorderBoardsCommand>
     {
-        private readonly IBoardRepository _boardRepository;
+        private readonly IColumnRepository _boardRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserContext _userContext;
 
-        public ReorderBoardsCommandHandler(IBoardRepository boardRepository, IUnitOfWork unitOfWork, IUserContext userContext)
+        public ReorderBoardsCommandHandler(IColumnRepository boardRepository, IUnitOfWork unitOfWork, IUserContext userContext)
         {
             _boardRepository = boardRepository;
             _unitOfWork = unitOfWork;

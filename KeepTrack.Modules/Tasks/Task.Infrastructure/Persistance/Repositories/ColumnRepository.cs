@@ -8,36 +8,36 @@ using TaskManagment.Domain.Boards;
 
 namespace TaskManagment.Infrastructure.Persistance.Repositories
 {
-    public class BoardRepository : IBoardRepository
+    public class ColumnRepository : IColumnRepository
     {
         private readonly TaskContext _context;
 
-        public BoardRepository(TaskContext context)
+        public ColumnRepository(TaskContext context)
         {
             _context = context;
         }
 
-        public async System.Threading.Tasks.Task AddAsync(Board board)
+        public async System.Threading.Tasks.Task AddAsync(Column board)
         {
             await _context.AddAsync(board);
         }
 
-        public async Task<Board> Get(Guid id)
+        public async Task<Column> Get(Guid id)
         {
             return await _context.Boards.Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<List<Board>> GetBoardsAsync(Guid ownerId, string companyName)
+        public async Task<List<Column>> GetBoardsAsync(Guid ownerId, string companyName)
         {
             return await _context.Boards.Where(x => x.CompanyId.CompanyName== companyName && x.CompanyId.CompanyOwnerId == ownerId).OrderBy(x => x.Order).ToListAsync();
         }
 
-        public void Update(Board board)
+        public void Update(Column board)
         {
             _context.Update(board);
         }
 
-        public void UpdateRange(List<Board> boards)
+        public void UpdateRange(List<Column> boards)
         {
             _context.UpdateRange(boards);
         }

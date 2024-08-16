@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskManagment.Domain.Boards;
-using TaskManagment.Domain.Labels;
+using TaskManagment.Domain.Cards;
 
 namespace TaskManagment.Domain.Executors
 {
@@ -15,10 +15,10 @@ namespace TaskManagment.Domain.Executors
         public ExecutorType ExecutorType { get; private set; }
         public DateTime Created { get; private set; }   
 
-        public Result<Label, Error> CreateLabel(string name)
+        public Result<Label, Error> CreateLabel(string name, string color, Guid cardId)
         {
             if (ExecutorType != ExecutorType.Employer) return Errors.EmployerLabelCreation;
-            return new Label(name);
+            return new Label(name, color, cardId);
         }
 
         public static Executor Create(Guid id,string name, ExecutorType type)

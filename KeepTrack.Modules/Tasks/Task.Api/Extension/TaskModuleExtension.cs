@@ -17,8 +17,8 @@ namespace TaskManagment.Api.Extension
             builder.Services.AddDbContext<TaskContext>(x => x.UseSqlServer(connection, x => x.MigrationsAssembly("KeepTrackr.Api")));
             builder.Services.AddTransient<IExecutorRepository, ExecutorRepository>();
             builder.Services.AddTransient<ITaskRepository, TaskRepository>();
-            builder.Services.AddTransient<IBoardRepository, BoardRepository>();
-            builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
+            builder.Services.AddTransient<IColumnRepository, ColumnRepository>();
+            builder.Services.AddTransient<IDeskRepository, DeskRepository>();
             builder.Services.AddTransient<ICardRepository, CardRepository>();
             return builder;
         }

@@ -11,11 +11,11 @@ namespace TaskManagment.Application.Commands.UpdateBoard
 {
     public class UpdateBoardCommandHandler : IRequestHandler<UpdateBoardCommand>
     {
-        private readonly IBoardRepository _boardRepository;
+        private readonly IColumnRepository _boardRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserContext _userContext;
 
-        public UpdateBoardCommandHandler(IBoardRepository boardRepository, IUnitOfWork unitOfWork, IUserContext userContext)
+        public UpdateBoardCommandHandler(IColumnRepository boardRepository, IUnitOfWork unitOfWork, IUserContext userContext)
         {
             _boardRepository = boardRepository;
             _unitOfWork = unitOfWork;

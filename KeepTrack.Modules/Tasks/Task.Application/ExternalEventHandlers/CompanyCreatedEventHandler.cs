@@ -11,16 +11,16 @@ namespace TaskManagment.Application.ExternalEventHandlers
 {
     public class CompanyCreatedEventHandler : INotificationHandler<CompanyHasBeenAddedExternalEvent>
     {
-        private readonly ICompanyRepository _companyRepository;
+        private readonly IDeskRepository _companyRepository;
 
-        public CompanyCreatedEventHandler(ICompanyRepository companyRepository)
+        public CompanyCreatedEventHandler(IDeskRepository companyRepository)
         {
             _companyRepository = companyRepository;
         }
 
         public async System.Threading.Tasks.Task Handle(CompanyHasBeenAddedExternalEvent notification, CancellationToken cancellationToken)
         {
-            await _companyRepository.AddAsync(Company.CreateCompany(notification.CompanyName, notification.OwnerId));
+            await _companyRepository.AddAsync(Desk.CreateDesk(notification.CompanyName, notification.OwnerId));
         }
     }
 }

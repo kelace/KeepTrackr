@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../app/store';
-import Board from '../../kanban/Board/Board';
+import Board from './Board/Board';
 import { DragDropContext, Droppable, Draggable, DroppableProvided, DraggableProvided, DropResult } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
-import Editable from "../../kanban/Editable/Editable";
+import Editable from "./Editable/Editable";
 import { addBoard, fetchAllBoards, reorderBoard, reorderCard } from './tasksPageSlice';
 import { useParams } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
+import CardDetails from './CardDetails/CardDetails';
 
 function TasksPage() {
     const [data, setData]: any = useState([]);
@@ -17,6 +18,7 @@ function TasksPage() {
     const nextOrderValue = useSelector((x: any) => x.tasks.boards.entities.length + 1);
     const boards = useSelector((x: any) => x.tasks.boards.entities);
     const cards = useSelector((x: any) => x.tasks.cards.entities);
+    const isCardModalOpened = useSelector((x: any) => x.tasks.openedCardId != '' && x.tasks.openedCardId != undefined && x.tasks.openedCardId != null ? true : false );
 
     useEffect(() => {
         if (boards.length == 0) dispatch(fetchAllBoards(company));
@@ -116,9 +118,13 @@ function TasksPage() {
         console.log(tempBoards);
         setData(tempBoards);
     };
+
     return (
         <DragDropContext onDragEnd={onDragEnd}>
-            <div className="App">
+            <div className="task_page">
+
+                {isCardModalOpened && <CardDetails />}
+                     
                 <div className="app_outer">
                     <div className="app_boards">
                         
@@ -153,8 +159,8 @@ function TasksPage() {
                                                 </Draggable>
                                             )
 
+                                    })}
 
-                                        })}
                                         {provided.placeholder}
                                 
                                 </Grid>

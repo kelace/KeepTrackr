@@ -5,10 +5,19 @@ import Dropdown from "../Dropdown/Dropdown";
 import Modal from "../Modal/Modal";
 import Tag from "../Tags/Tag";
 import "./Card.css";
-import CardDetails from "./CardDetails/CardDetails";
+import CardDetails from "../CardDetails/CardDetails";
+import { openCard } from '../tasksPageSlice';
+import { useDispatch } from "react-redux";
+import { AppDispatch } from '../../../../app/store';
+import { useSelector } from "react-redux";
+
 const Card = (props: any) => {
     const [dropdown, setDropdown] = useState(false);
     const [modalShow, setModalShow] = useState(false);
+
+    const labels = useSelector((x: any) => x.tasks.labels.entities.filter((c: any) => c.cardId == props.id));
+
+    const dispatch = useDispatch<AppDispatch>();
 
     return (
         <Draggable
@@ -16,18 +25,9 @@ const Card = (props: any) => {
             draggableId={props.id.toString()}
             index={props.index}
         >
+
             {(provided: any) => (
                 <>
-                    {modalShow && (
-                        <CardDetails
-                            updateCard={props.updateCard}
-                            onClose={setModalShow}
-                            card={props.card}
-                            bid={props.bid}
-                            removeCard={props.removeCard}
-                        />
-                    )}
-
                     <div
                         className="custom__card"
                         onClick={() => {
@@ -38,26 +38,28 @@ const Card = (props: any) => {
                         ref={provided.innerRef}
                     >
                         <div className="card__text">
+
                             <p>{props.title}</p>
                             <MoreHorizontal
                                 className="car__more"
                                 onClick={() => {
-                                    setDropdown(true);
+                                    dispatch(openCard(props.id.toString()));
                                 }}
                             />
+
                         </div>
 
                         <div className="card__tags">
-                            {props.tags?.map((item: any, index: any) => (
-                                <Tag key={index} tagName={item.tagName} color={item.color} />
+                            {labels.map((item: any, index: any) => (
+                                <Tag key={index} tagName={item.name} color={item.color} />
                             ))}
                         </div>
 
                         <div className="card__footer">
-                            {/* <div className="time">
-                <Clock />
-                <span>Sun 12:30</span>
-              </div> */}
+                            <div className="time">
+                                <Clock />
+                                <span>Sun 12:30</span>
+                            </div>
                             {/*{props.card.task.length !== 0 && (*/}
                             {/*    <div className="task">*/}
                             {/*        <CheckSquare />*/}

@@ -15,7 +15,7 @@
 .modal__content {
   /* overflow-y: auto; */
   max-height: 95vh;
-  background-color: var(--modal-color);
+  background-color: #ffff;
   border-radius: 3px;
   box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.12);
 }

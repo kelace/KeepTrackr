@@ -8,25 +8,25 @@ using TaskManagment.Domain.Companies;
 
 namespace TaskManagment.Infrastructure.Persistance.Repositories
 {
-    public class CompanyRepository : ICompanyRepository
+    public class DeskRepository : IDeskRepository
     {
         private readonly TaskContext _context;
-        public CompanyRepository(TaskContext context)
+        public DeskRepository(TaskContext context)
         {
             _context = context;
         }
 
-        public async System.Threading.Tasks.Task AddAsync(Company company)
+        public async System.Threading.Tasks.Task AddAsync(Desk company)
         {
             await _context.Companies.AddAsync(company);
         }
 
-        public async Task<Company> Get(string name, Guid ownerId)
+        public async Task<Desk> Get(string name, Guid ownerId)
         {
             return await _context.Companies.Where(x => x.CompanyName == name && x.OwnerId == ownerId).FirstOrDefaultAsync();
         }
 
-        public void Update(Company company)
+        public void Update(Desk company)
         {
             _context.Companies.Update(company);
         }

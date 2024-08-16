@@ -14,11 +14,11 @@ namespace TaskManagment.Application.Commands.AddBoard
     public class AddBoardCommandHandler : IRequestHandler<AddBoardCommand>
     {
         private readonly IExecutorRepository _executorRepository;
-        private readonly IBoardRepository _boardRepository;
-        private readonly ICompanyRepository _companyRepository;
+        private readonly IColumnRepository _boardRepository;
+        private readonly IDeskRepository _companyRepository;
         private readonly IUserContext _userContext;
         private readonly IUnitOfWork _unitOfWork;
-        public AddBoardCommandHandler(IBoardRepository boardRepository, IUserContext userContext, IExecutorRepository executorRepository, IUnitOfWork unitOfWork, ICompanyRepository companyRepository)
+        public AddBoardCommandHandler(IColumnRepository boardRepository, IUserContext userContext, IExecutorRepository executorRepository, IUnitOfWork unitOfWork, IDeskRepository companyRepository)
         {
             _boardRepository = boardRepository;
             _userContext = userContext;
