@@ -18,6 +18,8 @@
     <Folder Include="src\features\Employee\dashboardEmployees\" />
     <Folder Include="src\features\Employer\companies\" />
     <Folder Include="src\features\Employer\tasksCompanies\" />
+    <Folder Include="src\features\Employer\tasks\Calendar\" />
+    <Folder Include="src\features\Employer\tasks\UserAssign\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptConfiguration Remove="src\common\**" />

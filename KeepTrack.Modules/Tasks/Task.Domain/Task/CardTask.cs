@@ -7,17 +7,24 @@ using System.Threading.Tasks;
 
 namespace TaskManagment.Domain
 {
-    public class Task : EntityBase, IAggregateRoot
+    public class CardTask : EntityBase, IAggregateRoot
     {
         public string Name { get; private set; }
         public DateTime Created { get; private set; }
         public DateTime Updated { get; private set; }
-        public Guid AssignedTo { get;  private set; }
+        public Guid CardId { get; private set; }
+        public bool Completed { get; private set; }
 
-        public void AssignExecutorToTask(Guid id)
+
+        public CardTask(string name)
         {
-            AssignedTo = id;
+            Name = name;
         }
+
+        //public void AssignExecutorToTask(Guid id)
+        //{
+        //    AssignedTo = id;
+        //}
 
         //public static Task CreateEmpty(CompanyId companyId)
         //{

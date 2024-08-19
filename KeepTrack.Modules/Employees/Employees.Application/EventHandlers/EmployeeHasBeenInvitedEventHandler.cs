@@ -35,6 +35,7 @@ namespace Employees.Application.EventHandlers
                 EmployeeId = notification.EmployeeId,
                 CompanyName = notification.CompanyName,
                 MailId = notification.MailId,
+                CompanyOwner = notification.CompanyOwnerId
             });
 
         }

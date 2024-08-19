@@ -30,33 +30,49 @@ namespace TaskManagment.Application.Queries.GetAllBoardsInfo
                             select * from task.Boards b
                             left join ( select *, row_number() OVER (ORDER BY ci.[order]) as no from task.Cards as ci) as c on b.Id = c.BoardId                              
                             left join task.label as l on c.Id = l.CardId                              
+                            left join  ( select e.*, ec.OwnerId, ec.Name as Title  from task.Executors e join task.Executors_Company as ec on ec.OwnerId = @OwnerId and ec.Name = @CompanyName)  as e on e.Title = b.CompanyId_CompanyName and e.OwnerId =  b.CompanyId_CompanyOwnerId 
+                            left join task.tasks as t on t.cardId = c.id
                             where b.CompanyId_CompanyName = @CompanyName and b.CompanyId_CompanyOwnerId = @OwnerId
                             order by [b].[ORDER] asc
                             ";
 
-                BoardsDTO JoinMap(BoardDTO board, CardDTO card, LabelDTO label)
+                BoardsDTO JoinMap(BoardDTO board, CardDTO card, LabelDTO label, UserDTO user, TaskDTO task)
                 {
                   
                     var boards = new BoardsDTO();
 
                     boards.Boards.Add(board);
 
-                    if (card is null) return boards;
+                    if (card is not null)
+                    {
+                        boards.Cards.Add(card);
+                    }
 
-                    boards.Cards.Add(card);
+                    if (label is not null)
+                    {
+                        boards.Labels.Add(label);
+                    }
 
-                    if (label is null) return boards;
+                    if (user is not null)
+                    {
+                        boards.Users.Add(user);
+                    }
 
-                    boards.Labels.Add(label);
+                    if (task is not null)
+                    {
+                        boards.Tasks.Add(task);
+                    }
 
                     return boards;
                 }
 
-                var result = await connection.QueryAsync<BoardDTO, CardDTO, LabelDTO, BoardsDTO>(sql, JoinMap, new { CompanyName = request.CompanyName, OwnerId = _userContext.GetCrrentUserId });
+                var result = await connection.QueryAsync<BoardDTO, CardDTO, LabelDTO, UserDTO, TaskDTO, BoardsDTO >(sql, JoinMap, new { CompanyName = request.CompanyName, OwnerId = _userContext.GetCrrentUserId });
 
                 var boards = result.SelectMany(x => x.Boards).GroupBy(x => x.Id).Select(x => x.First()).ToList();
                 var cards = result.SelectMany(x => x.Cards).GroupBy(x => x.Id).Select(x => x.First()).ToList();
                 var labels = result.SelectMany(x => x.Labels).GroupBy(x => x.Id).Select(x => x.First()).ToList();
+                var users = result.SelectMany(x => x.Users).GroupBy(x => x.Id).Select(x => x.First()).ToList();
+                var tasks = result.SelectMany(x => x.Tasks).GroupBy(x => x.Id).Select(x => x.First()).ToList();
 
 
                 //return boards.GroupBy(x => new {x.Boards, x.Cards}).Select(b =>
@@ -70,7 +86,8 @@ namespace TaskManagment.Application.Queries.GetAllBoardsInfo
                 {
                     Boards = boards,
                     Cards = cards,
-                    Labels = labels
+                    Labels = labels,
+                    Users = users
                 };
             }
         }

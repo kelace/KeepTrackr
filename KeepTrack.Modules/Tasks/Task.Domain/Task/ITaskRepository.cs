@@ -8,8 +8,8 @@ namespace TaskManagment.Domain
 {
     public interface ITaskRepository
     {
-        Task<Task> Get(Guid id);
-        void Update(Task task);
-        System.Threading.Tasks.Task AddAsync(Task task);
+        Task<CardTask> Get(Guid id);
+        void Update(CardTask task);
+        System.Threading.Tasks.Task AddAsync(CardTask task);
     }
 }

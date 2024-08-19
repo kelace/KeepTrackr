@@ -24,7 +24,7 @@ namespace TaskManagment.Infrastructure.Persistance.Repositories
 
         public async Task<Card> Get(Guid id)
         {
-           return await _context.Cards.Where(x => x.Id == id).FirstOrDefaultAsync();
+           return await _context.Cards.Include(x => x.Labels).Include(x => x.Tasks).Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<List<Card>> GetBoardsAsync(Guid userId, string company)

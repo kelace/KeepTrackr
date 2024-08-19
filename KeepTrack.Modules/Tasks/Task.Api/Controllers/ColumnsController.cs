@@ -10,7 +10,7 @@ using TaskManagment.Application.Queries.GetAllBoardsInfo.DTOs;
 
 namespace TaskManagment.Api.Controllers
 {
-    [Route("api/[controller]/")]
+    [Route("api/tasks/")]
     [ApiController]
     [Authorize(AuthenticationSchemes = "Bearer")]
     public class TasksController : ControllerBase

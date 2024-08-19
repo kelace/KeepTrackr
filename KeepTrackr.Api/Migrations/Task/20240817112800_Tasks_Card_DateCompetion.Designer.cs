@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskManagment.Infrastructure.Persistance;
 
@@ -11,9 +12,11 @@ using TaskManagment.Infrastructure.Persistance;
 namespace KeepTrackr.Api.Migrations.Task
 {
     [DbContext(typeof(TaskContext))]
-    partial class TaskContextModelSnapshot : ModelSnapshot
+    [Migration("20240817112800_Tasks_Card_DateCompetion")]
+    partial class Tasks_Card_DateCompetion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,40 +48,6 @@ namespace KeepTrackr.Api.Migrations.Task
                     b.HasKey("Id");
 
                     b.ToTable("Boards", "task");
-                });
-
-            modelBuilder.Entity("TaskManagment.Domain.CardTask", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CardId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CardId1")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Completed")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CardId");
-
-                    b.HasIndex("CardId1");
-
-                    b.ToTable("Tasks", "task");
                 });
 
             modelBuilder.Entity("TaskManagment.Domain.Cards.Card", b =>
@@ -150,27 +119,6 @@ namespace KeepTrackr.Api.Migrations.Task
                     b.ToTable("Companies", "task");
                 });
 
-            modelBuilder.Entity("TaskManagment.Domain.Executors.Company", b =>
-                {
-                    b.Property<Guid>("OwnerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserAssignedId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("OwnerId", "Name");
-
-                    b.HasIndex("UserAssignedId");
-
-                    b.ToTable("Executors_Company", "task");
-                });
-
             modelBuilder.Entity("TaskManagment.Domain.Executors.Executor", b =>
                 {
                     b.Property<Guid>("Id")
@@ -190,6 +138,33 @@ namespace KeepTrackr.Api.Migrations.Task
                     b.HasKey("Id");
 
                     b.ToTable("Executors", "task");
+                });
+
+            modelBuilder.Entity("TaskManagment.Domain.Task", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AssignedTo")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssignedTo")
+                        .IsUnique();
+
+                    b.ToTable("Tasks", "task");
                 });
 
             modelBuilder.Entity("TaskManagment.Domain.Boards.Column", b =>
@@ -216,19 +191,6 @@ namespace KeepTrackr.Api.Migrations.Task
 
                     b.Navigation("CompanyId")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("TaskManagment.Domain.CardTask", b =>
-                {
-                    b.HasOne("TaskManagment.Domain.Cards.Card", null)
-                        .WithMany()
-                        .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TaskManagment.Domain.Cards.Card", null)
-                        .WithMany("Tasks")
-                        .HasForeignKey("CardId1");
                 });
 
             modelBuilder.Entity("TaskManagment.Domain.Cards.Card", b =>
@@ -270,11 +232,11 @@ namespace KeepTrackr.Api.Migrations.Task
                         .HasForeignKey("CardId1");
                 });
 
-            modelBuilder.Entity("TaskManagment.Domain.Executors.Company", b =>
+            modelBuilder.Entity("TaskManagment.Domain.Task", b =>
                 {
                     b.HasOne("TaskManagment.Domain.Executors.Executor", null)
-                        .WithMany("Companies")
-                        .HasForeignKey("UserAssignedId")
+                        .WithOne()
+                        .HasForeignKey("TaskManagment.Domain.Task", "AssignedTo")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -282,13 +244,6 @@ namespace KeepTrackr.Api.Migrations.Task
             modelBuilder.Entity("TaskManagment.Domain.Cards.Card", b =>
                 {
                     b.Navigation("Labels");
-
-                    b.Navigation("Tasks");
-                });
-
-            modelBuilder.Entity("TaskManagment.Domain.Executors.Executor", b =>
-                {
-                    b.Navigation("Companies");
                 });
 #pragma warning restore 612, 618
         }

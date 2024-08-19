@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskManagment.Infrastructure.Persistance;
 
@@ -11,9 +12,11 @@ using TaskManagment.Infrastructure.Persistance;
 namespace KeepTrackr.Api.Migrations.Task
 {
     [DbContext(typeof(TaskContext))]
-    partial class TaskContextModelSnapshot : ModelSnapshot
+    [Migration("20240817154605_Tasks_Cards_Tasks")]
+    partial class Tasks_Cards_Tasks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,10 +56,7 @@ namespace KeepTrackr.Api.Migrations.Task
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CardId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CardId1")
+                    b.Property<Guid?>("CardId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Completed")
@@ -75,8 +75,6 @@ namespace KeepTrackr.Api.Migrations.Task
                     b.HasKey("Id");
 
                     b.HasIndex("CardId");
-
-                    b.HasIndex("CardId1");
 
                     b.ToTable("Tasks", "task");
                 });
@@ -221,14 +219,8 @@ namespace KeepTrackr.Api.Migrations.Task
             modelBuilder.Entity("TaskManagment.Domain.CardTask", b =>
                 {
                     b.HasOne("TaskManagment.Domain.Cards.Card", null)
-                        .WithMany()
-                        .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TaskManagment.Domain.Cards.Card", null)
                         .WithMany("Tasks")
-                        .HasForeignKey("CardId1");
+                        .HasForeignKey("CardId");
                 });
 
             modelBuilder.Entity("TaskManagment.Domain.Cards.Card", b =>

@@ -9,6 +9,7 @@ namespace TaskManagment.Application.Queries.GetAllBoardsInfo.DTOs
     public class LabelDTO
     {
         public Guid Id { get; set; }
+        public Guid CardId { get; set; }
         public string Name { get; set; }
         public string Color { get; set; }
     }

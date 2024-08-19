@@ -1,7 +1,7 @@
 .popover__wrapper {
   position: absolute;
   left: 55%;
-  top: 55%;
+  top: 0;
   width: 400px;
   max-width: 45%;
   display: flex;

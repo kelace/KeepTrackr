@@ -8,7 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { AppDispatch } from '../../../app/store';
+import { AppDispatch, IRootState } from '../../../app/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllCompanies, CompaniesState, Company, addCompany } from './CompaniesSlice';
 import { nameChange } from './CompaniesSlice';
@@ -16,10 +16,10 @@ import { nameChange } from './CompaniesSlice';
 function CompaniesComponent() {
 
     const dispatch = useDispatch<AppDispatch>();
-    const companies = useSelector((x: any) => x.companies.companies);
-    const errors = useSelector((x: any) => x.companies.errors);
+    const companies = useSelector((x: IRootState) => x.companies.companies);
+    const errors = useSelector((x: IRootState) => x.companies.errors);
 
-    const company = useSelector((state: any) => state.companies.name);
+    const company = useSelector((state: IRootState) => state.companies.name);
 
     useEffect(() => {
         const count = companies.length;

@@ -24,7 +24,7 @@ namespace TaskManagment.Infrastructure.Persistance
         public DbSet<Card> Cards { get; set; }
         public DbSet<Executor> Executors { get; set; }
         public DbSet<Desk> Companies { get; set; }
-        public DbSet<Domain.Task> Tasks { get; set; }
+        public DbSet<Domain.CardTask> Tasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,15 @@ namespace TaskManagment.Infrastructure.Persistance
             {
                 x.Ignore(x => x.Events);
                 x.Property(x => x.ExecutorType).HasConversion<int>();
+                x.HasMany<Company>(x => x.Companies).WithOne().HasForeignKey(x => x.UserAssignedId);
+               
+            });
+
+            modelBuilder.Entity<Company>(x =>
+            {
+                x.Ignore(x => x.Events);
+                x.HasKey(x => new { x.OwnerId, x.Name });
+                x.ToTable("Executors_Company");
             });
 
             modelBuilder.Entity<Column>(x =>
@@ -56,18 +65,20 @@ namespace TaskManagment.Infrastructure.Persistance
                 x.Ignore(x => x.Events);
                 x.OwnsOne(x => x.CompanyId);
                 x.HasMany<Label>().WithOne().HasForeignKey(x => x.CardId);
+                x.HasMany<CardTask>().WithOne().HasForeignKey(x => x.CardId);
             });
 
-            modelBuilder.Entity<Domain.Task>(x =>
+            modelBuilder.Entity<Domain.CardTask>(x =>
             {
                 x.Ignore(x => x.Events);
-                x.HasOne<Executor>().WithOne().HasForeignKey<Domain.Task>(x => x.AssignedTo);
+                //x.HasOne<Executor>().WithOne().HasForeignKey<Domain.CardTask>(x => x.AssignedTo);
             });
 
             modelBuilder.Entity<Label>(x =>
             {
                 x.Ignore(x => x.Events);
             });
+
         }
     }
 }

@@ -36,7 +36,8 @@ namespace Employees.Domain.InvitingEmployee
                 Email = email,
                 Name = name,
                 CompanyName = "company",
-                MailId = invitation.MailId
+                MailId = invitation.MailId,
+                CompanyOwnerId = Id,
             });
 
             return new InivtationResultInfo

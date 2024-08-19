@@ -39,6 +39,39 @@ interface ReorderCard{
     company: string | undefined
 };
 
+export const changeCompletionDate = createAsyncThunk('tasks/changeCompletionDate', async (card: { cardId: string, completionDate: Date}) => {
+
+
+    const token = localStorage.getItem('token');
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    };
+
+    const result = await httpClient.put('api/tasks/card', card, config);
+
+    return card;
+
+});
+
+export const createLabel = createAsyncThunk('tasks/createLabel', async (label: { title: string, color: string, cardId: string }) => {
+
+    const token = localStorage.getItem('token');
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    };
+
+    const result = await httpClient.post('api/tasks/cards/labels', label, config);
+
+    return label;
+
+});
+
 export const reorderCard = createAsyncThunk('tasks/reorderCard', async (board: ReorderCard) => {
 
     const token = localStorage.getItem('token');
@@ -56,6 +89,21 @@ export const reorderCard = createAsyncThunk('tasks/reorderCard', async (board: R
 
 });
 
+export const addTask = createAsyncThunk('tasks/addTask', async (task: { taskName: string, cardId: string }) => {
+
+    const token = localStorage.getItem('token');
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    };
+
+    const result = httpClient.post('api/card/tasks', task, config);
+
+    return task;
+
+});
 
 
 export const reorderBoard = createAsyncThunk('tasks/reorderBoard', async (board: ReorderBoard) => {
@@ -135,11 +183,19 @@ export const fetchAllBoards = createAsyncThunk('tasks/fetchBoards', async (compa
 //    return state.tasks.boards.forEach
 //};
 
+export interface TaskPagwState {
+
+};
+
 const initialState = {
 
+    openedCalendar: false,
+    labelShow: false,
+    openedAssign: false,
     openedCardId: '',
-
+    color: '#ffff',
     openedLabelModal: false,
+    newLabelName: '',
 
     newBoard: {
         title:''
@@ -156,8 +212,10 @@ const initialState = {
     },
 
     labels: {
-        ids: [],
         entities: []
+    },
+    users: {
+        entities:[]
     }
 
 };
@@ -174,12 +232,30 @@ const slice = createSlice({
         },
 
         openLabel: (state: any) => {
-            state.openedLabelModal = true;
+            state.labelShow = true;
         },
 
         closeLabel: (state: any) => {
             state.openedLabelModal = false;
-        }
+        },
+
+        changeColor: (state: any, action: any) => {
+            state.color = action.payload;
+        },
+        changeNewLabelName: (state: any, action: any) => {
+            state.newLabelName = action.payload;
+        },
+        createLabel: (state: any) => {
+            state.labels.entities.push({
+                title: state.newLabelName
+            })
+        },
+        openCalendar: (state: any) => {
+            state.openedCalendar = true;
+        },
+        closeCalendar: (state: any) => {
+        state.openedCalendar = true;
+    }
     },
 
     initialState: initialState,
@@ -225,8 +301,25 @@ const slice = createSlice({
             state.cards.entities.sort((a: any, b: any) => a.order > b.order ? 1 : -1);
 
         });
+
+        builder.addCase(createLabel.fulfilled, (state: any, action: any) => {
+            state.labels.entities.push(action.payload);
+        });
+
+        builder.addCase(changeCompletionDate.pending, (state: any, action: any) => {
+
+            state.openedCalendar = false;
+
+        });
+
+        builder.addCase(changeCompletionDate.fulfilled, (state: any, action: any) => {
+
+
+
+        });
     }
 });
-export const { changeNewBoardName, openCard, openLabel, closeLabel } = slice.actions;
+
+export const { changeNewBoardName, openCard, openLabel, closeLabel, changeColor, changeNewLabelName, openCalendar } = slice.actions;
 
 export default slice.reducer;

@@ -1,8 +1,14 @@
-import React from "react";
+import React, { ChangeEvent  } from "react";
+import { useSelector } from 'react-redux';
 import { useRef } from "react";
 import { useState } from "react";
 import { Check, X } from "react-feather";
 import "./Label.css";
+import { ColorResult, SketchPicker } from 'react-color';
+import { changeColor, changeNewLabelName, createLabel } from '../tasksPageSlice';
+import { useDispatch } from "react-redux";
+import { AppDispatch } from '../../../../app/store';
+
 export default function (props: any) {
     const input = useRef<HTMLInputElement>(null);
 
@@ -10,9 +16,24 @@ export default function (props: any) {
 
     const [label, setLabel] = useState("");
 
+    const labels = useSelector((x: any) => x.tasks.labels.entities);
+
+    const newLabelName = useSelector((x: any) => x.tasks.newLabelName);
+
+    const dispatch = useDispatch<AppDispatch>();
+
+    //const isColorUsed = useSelector((x: any) => {
+    //    const isFound =labelsfind((item: any) => item.color === color);
+    //    return isFound ? true : false;
+    //});
+
+    const cardId = useSelector((x: any) => x.tasks.openedCardId); 
+
+    const defaultColor = useSelector((x: any) => x.tasks.color);
 
     const isColorUsed = (color: any) => {
-        const isFound = props.tags.find((item: any) => item.color === color);
+
+        const isFound = labels.find((item: any) => item.color === color);
 
         return isFound ? true : false;
     };
@@ -27,7 +48,10 @@ export default function (props: any) {
                         </p>
                         <X
                             onClick={() => props.onClose(false)}
-                            style={{ cursor: "pointer", width: "15px", height: "15px" }}
+                            style={{
+                                cursor: "pointer", width: "15px", height: "15px", position: "absolute",
+                                top: "10px",
+                                right: "10px" }}
                         />
                     </div>
                     <div className="row">
@@ -48,10 +72,10 @@ export default function (props: any) {
                             <input
                                 type="text"
                                 ref={input}
-                                defaultValue={label}
+                                value={newLabelName}
                                 placeholder="Name of label"
-                                onChange={(e) => {
-                                    setLabel(e.target.value);
+                                onChange={(e: any) => {
+                                    dispatch(changeNewLabelName(e.target.value));
                                 }}
                             />
 
@@ -69,36 +93,24 @@ export default function (props: any) {
                             Select color
                         </p>
                         <div className="d-flex justify-content-between color__palette flex-wrap mb-2">
-                            {props.color.map((item: any, index: any) => (
-                                <span
-                                    onClick={() => setSelectedColor(item)}
-                                    key={index}
-                                    className={isColorUsed(item) ? "disabled__color" : ""}
-                                    style={{ backgroundColor: item, cursor: "pointer" }}
-                                >
-                                    {selectedColor === item ? <Check className="icon__sm" /> : ""}
-                                </span>
-                            ))}
+                            <SketchPicker color={defaultColor} onChange={(x: any) => dispatch(changeColor(x))} />
+                            {/*{props.color.map((item: any, index: any) => (*/}
+                            {/*    <span*/}
+                            {/*        onClick={() => setSelectedColor(item)}*/}
+                            {/*        key={index}*/}
+                            {/*        className={isColorUsed(item) ? "disabled__color" : ""}*/}
+                            {/*        style={{ backgroundColor: item, cursor: "pointer" }}*/}
+                            {/*    >*/}
+                            {/*        {selectedColor === item ? <Check className="icon__sm" /> : ""}*/}
+                            {/*    </span>*/}
+                            {/*))}*/}
                         </div>
                         <div>
                             <button
                                 className="create__btn my-2"
-                                onClick={() => {
-                                    if (label !== "") {
-                                        if (selectedColor === "") {
-                                            alert("Please select color for label.");
-                                        }
-                                        props.addTag(label, selectedColor);
-                                        setSelectedColor("");
-                                        setLabel("");
-
-                                        if (input.current != null) {
-                                            input.current.value = "";
-                                        }
-
-                                    } else return;
-                                }}
-                            >
+                                onClick={() => dispatch(createLabel({
+                                    title: newLabelName, color: defaultColor.hex, cardId
+                                }))}>
                                 Create
                             </button>
                         </div>

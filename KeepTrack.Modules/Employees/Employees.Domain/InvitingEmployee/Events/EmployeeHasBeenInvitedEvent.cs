@@ -14,6 +14,7 @@ namespace Employees.Domain.InvitingEmployee.Events
         public string Email { get; set; }
         public string Name { get; set; }    
         public string CompanyName { get; set; }
+        public Guid CompanyOwnerId { get; set; }
         public Guid MailId { get; set; }
     }
 }

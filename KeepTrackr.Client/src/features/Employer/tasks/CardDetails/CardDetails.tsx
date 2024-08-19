@@ -11,6 +11,7 @@ import {
     Trash,
     Type,
     X,
+    User
 } from "react-feather";
 import Editable from "../Editable/Editable";
 import Modal from "../Modal/Modal";
@@ -22,7 +23,9 @@ import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 import { useDispatch } from "react-redux";
 import { AppDispatch } from '../../../../app/store';
-import { closeLabel, openLabel } from "../tasksPageSlice";
+import { closeLabel, openLabel, openCalendar, addTask } from "../tasksPageSlice";
+import CalendarModal from "../Calendar/Calendar";
+import UserAssignWindow from "../UserAssign/UserAssignWindow";
 
 export default function CardDetails(props: any) {
     const colors = ["#61bd4f", "#f2d600", "#ff9f1a", "#eb5a46", "#c377e0"];
@@ -32,9 +35,16 @@ export default function CardDetails(props: any) {
 
     const [text, setText] = useState(values.title);
 
-    const labelShow = useSelector((x: any) => x.tasks.openedLabel);
+    const labelShow = useSelector((x: any) => x.tasks.labelShow);
+    const calendarShow = useSelector((x: any) => x.tasks.openedCalendar);
 
-    const labels = useSelector((x: any) => x.tasks.labels.entities.filter((c: any) => c.cardId == props.id));
+    const cardId = useSelector((x: any) => x.tasks.openedCardId);
+
+    const card = useSelector((x: any) => x.tasks.cards.entities.find((c: any) => c.id == cardId));
+
+    const labels = useSelector((x: any) => x.tasks.labels.entities.filter((c: any) => c.cardId == cardId));
+
+    const showAssignUser = useSelector((x: any) => x.tasks.openedAssign );
 
     const dispatch = useDispatch<AppDispatch>();
 
@@ -53,14 +63,14 @@ export default function CardDetails(props: any) {
         );
     };
 
-    const addTask = (value: any) => {
-        values.task.push({
-            id: uuidv4(),
-            task: value,
-            completed: false,
-        });
-        setValues({ ...values });
-    };
+    //const addTask = (value: any) => {
+    //    values.task.push({
+    //        id: uuidv4(),
+    //        task: value,
+    //        completed: false,
+    //    });
+    //    setValues({ ...values });
+    //};
 
     const removeTask = (id: any) => {
         const remaningTask = values.task.filter((item: any) => item.id !== id);
@@ -82,6 +92,8 @@ export default function CardDetails(props: any) {
     const updateTitle = (value: any) => {
         setValues({ ...values, title: value });
     };
+
+    const defaultColor = useSelector((x: any) => x.tasks.color);
 
     const calculatePercent = () => {
         //const totalTask = values.task.length;
@@ -125,6 +137,7 @@ export default function CardDetails(props: any) {
             document.removeEventListener("keypress", handelClickListner);
         };
     });
+
     useEffect(() => {
         if (props.updateCard) props.updateCard(props.bid, values.id, values);
     }, [values]);
@@ -133,27 +146,19 @@ export default function CardDetails(props: any) {
         <Modal onClose={props.onClose}>
             <div className="local__bootstrap">
 
-
                 <Grid container style={{ minWidth: "650px", position: "relative" }} spacing={2}>
-
 
                     <Grid item xs={12}>
                         <div className="d-flex align-items-center pt-3 gap-2">
                             <CreditCard className="icon__md" />
-                            {input ? (
-                                <Input title={values.title} />
-                            ) : (
-                                <h5
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() => setInput(true)}
-                                >
-                                    {values.title}
-                                </h5>
-                            )}
+                            {<h5
+                                style={{ cursor: "pointer" }}
+
+                            >
+                                {card.title}
+                            </h5>}
                         </div>
                     </Grid>
-
-
 
                     <Grid item xs={8}>
                         <h6 className="text-justify">Label</h6>
@@ -161,29 +166,24 @@ export default function CardDetails(props: any) {
                             className="d-flex label__color flex-wrap"
                             style={{ width: "500px", paddingRight: "10px" }}
                         >
-                            {/*{values.tags.length !== 0 ? (*/}
-                            {/*                  values.tags.map((item: any) => (*/}
-                            {/*    <span*/}
-                            {/*      className="d-flex justify-content-between align-items-center gap-2"*/}
-                            {/*      style={{ backgroundColor: item.color }}*/}
-                            {/*    >*/}
-                            {/*      {item.tagName.length > 10*/}
-                            {/*        ? item.tagName.slice(0, 6) + "..."*/}
-                            {/*        : item.tagName}*/}
-                            {/*      <X*/}
-                            {/*        onClick={() => removeTag(item.id)}*/}
-                            {/*        style={{ width: "15px", height: "15px" }}*/}
-                            {/*      />*/}
-                            {/*    </span>*/}
-                            {/*  ))*/}
-                            {/*) : (*/}
-                            {/*  <span*/}
-                            {/*    style={{ color: "#ccc" }}*/}
-                            {/*    className="d-flex justify-content-between align-items-center gap-2"*/}
-                            {/*  >*/}
-                            {/*    <i> No Labels</i>*/}
-                            {/*  </span>*/}
-                            {/*)}*/}
+                            {
+                                labels.map((item: any) => (
+                                    <span
+                                        className="d-flex justify-content-between align-items-center gap-2"
+                                        style={{ backgroundColor: item.color }}
+                                        key={item.id ?? 'newLabel'}
+                                    >
+                                        {item.name.length > 10
+                                            ? item.name.slice(0, 6) + "..."
+                                            : item.name}
+                                        <X
+                                            onClick={() => removeTag(item.id)}
+                                            style={{ width: "15px", height: "15px" }}
+                                        />
+                                    </span>
+                                ))
+
+                            }
                         </div>
                         <div className="check__list mt-2">
                             <div className="d-flex align-items-end  justify-content-between">
@@ -252,12 +252,11 @@ export default function CardDetails(props: any) {
                                     parentClass={"task__editable"}
                                     name={"Add Task"}
                                     btnName={"Add task"}
-                                    onSubmit={addTask}
+                                    onSubmit={(x: any) => dispatch(addTask({ taskName: x, cardId: cardId }))}
                                 />
                             </div>
                         </div>
                     </Grid>
-
 
                     <Grid item xs={4}>
                         <h6>Add to card</h6>
@@ -265,7 +264,7 @@ export default function CardDetails(props: any) {
 
                             <ul>
                                 <li>
-                                    <Button variant="outlined" onClick={() => dispatch( openLabel() ) }>
+                                    <Button variant="outlined" onClick={() => dispatch(openLabel())}>
 
                                         <span className="icon__sm">
 
@@ -280,27 +279,50 @@ export default function CardDetails(props: any) {
                                             color={colors}
                                             addTag={addTag}
                                             tags={values.tags}
-                                            onClose={() => dispatch(closeLabel()) }
+                                            onClose={() => dispatch(closeLabel())}
                                         />
                                     )}
                                 </li>
                                 <li>
-                                    <button>
+
+                                    <Button variant="outlined" onClick={() => dispatch(openCalendar())}>
+
                                         <span className="icon__sm">
                                             <Clock />
                                         </span>
                                         Date
-                                    </button>
+                                    </Button>
+
+                                    {calendarShow && <CalendarModal />}
+
+                                </li>
+
+                                <li>
+                                
+                                    <Button variant="outlined" onClick={() => dispatch(openCalendar())}>
+
+                                        <span className="icon__sm">
+                                            <User />
+                                        </span>
+                                        
+                                        User
+                                    </Button>
+
+
+                                    {showAssignUser && <UserAssignWindow />}
+
                                 </li>
 
                                 <li>
 
-                                    <button onClick={() => props.removeCard(props.bid, values.id)}>
+                                    <Button variant="outlined" onClick={() => dispatch(openCalendar())}>
+
                                         <span className="icon__sm">
                                             <Trash />
                                         </span>
                                         Delete Card
-                                    </button>
+                                    </Button>
+
                                 </li>
                             </ul>
 

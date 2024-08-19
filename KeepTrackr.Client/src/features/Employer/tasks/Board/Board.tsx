@@ -10,6 +10,7 @@ import { addCard } from '../tasksPageSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../../app/store';
 import { useParams } from 'react-router-dom';
+import { SketchPicker } from 'react-color';
 
 
 export default function Board(props: any) {
@@ -17,13 +18,6 @@ export default function Board(props: any) {
     const [dropdown, setDropdown] = useState(false);
     const [title, setTitle] = useState("");
     const dispatch = useDispatch<AppDispatch>();
-
-    //const cards = useSelector((x: any) => x.tasks.cards.entities.filter((el: any) => {
-
-    //    if (el.boardId == props.id) return el;
-
-    //}));
-
 
     const cards = useSelector((x: any) => {
         let c = Array.from(x.tasks.cards.entities);
@@ -64,6 +58,7 @@ export default function Board(props: any) {
 
     return (
         <div className="board">
+          
             <div className="board__top">
                 {show ? (
                     <div>

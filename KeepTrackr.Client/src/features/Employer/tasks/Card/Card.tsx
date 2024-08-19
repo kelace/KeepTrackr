@@ -16,6 +16,7 @@ const Card = (props: any) => {
     const [modalShow, setModalShow] = useState(false);
 
     const labels = useSelector((x: any) => x.tasks.labels.entities.filter((c: any) => c.cardId == props.id));
+    const card = useSelector((x: any) => x.tasks.cards.entities.find((c: any) => c.id == props.id));
 
     const dispatch = useDispatch<AppDispatch>();
 
@@ -39,7 +40,7 @@ const Card = (props: any) => {
                     >
                         <div className="card__text">
 
-                            <p>{props.title}</p>
+                            <p>{ card.name }</p>
                             <MoreHorizontal
                                 className="car__more"
                                 onClick={() => {
@@ -58,7 +59,7 @@ const Card = (props: any) => {
                         <div className="card__footer">
                             <div className="time">
                                 <Clock />
-                                <span>Sun 12:30</span>
+                                <span>{card.completionDate}</span>
                             </div>
                             {/*{props.card.task.length !== 0 && (*/}
                             {/*    <div className="task">*/}

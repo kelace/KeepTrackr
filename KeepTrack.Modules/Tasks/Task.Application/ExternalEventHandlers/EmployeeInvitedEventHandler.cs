@@ -21,7 +21,7 @@ namespace Task.Application.ExternalEventHandlers
 
         public async System.Threading.Tasks.Task Handle(EmployeeHasBeenInvitedInternalEvent notification, CancellationToken cancellationToken)
         {
-            var executor = Executor.Create(notification.EmployeeId, notification.Name, ExecutorType.Employee);
+            var executor = Executor.CreateEmployer(notification.EmployeeId, notification.Name, notification.CompanyOwner);
             await _executorRepository.AddAsync(executor);
         }
     }

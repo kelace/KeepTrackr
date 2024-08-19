@@ -15,10 +15,38 @@ namespace TaskManagment.Domain.Executors
         public ExecutorType ExecutorType { get; private set; }
         public DateTime Created { get; private set; }   
 
+        public List<Company> Companies { get; private set; }
+
         public Result<Label, Error> CreateLabel(string name, string color, Guid cardId)
         {
             if (ExecutorType != ExecutorType.Employer) return Errors.EmployerLabelCreation;
             return new Label(name, color, cardId);
+        }
+
+        public static Executor CreateEmployer(Guid id, string name, Guid ownerId )
+        {
+            var companies = new List<Company>();
+            companies.Add(new Company(name, ownerId, id ));
+
+            return new Executor
+            {
+                Id = id,
+                Created = DateTime.UtcNow,
+                Name = name,
+                ExecutorType = ExecutorType.Employer,
+                Companies = companies
+            };
+        }
+
+        public static Executor CreateEmployee(Guid id, string name, Guid companyOwnerId, string companyName)
+        {
+            return new Executor
+            {
+                Id = id,
+                Created = DateTime.UtcNow,
+                Name = name,
+                ExecutorType = ExecutorType.Employee,
+            };
         }
 
         public static Executor Create(Guid id,string name, ExecutorType type)

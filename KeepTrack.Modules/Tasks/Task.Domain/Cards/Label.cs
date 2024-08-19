@@ -15,7 +15,6 @@ namespace TaskManagment.Domain.Cards
 
         public Label(string name, string color, Guid cardId)
         {
-            Id = Guid.NewGuid();
             Name = name;
             Color = color;
             CardId = cardId;
