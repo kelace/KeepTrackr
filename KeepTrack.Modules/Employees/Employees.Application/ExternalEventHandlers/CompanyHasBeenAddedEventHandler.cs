@@ -1,6 +1,5 @@
 ﻿using Companies.Messages;
 using Employees.Domain;
-using Employees.Domain.Company;
 using Employees.Domain.InvitingEmployee;
 using KeepTrack.Common;
 using MediatR;
@@ -14,17 +13,20 @@ namespace Employees.Application.ExternalEventHandlers
 {
     public class CompanyHasBeenAddedEventHandler : INotificationHandler<CompanyHasBeenAddedExternalEvent>
     {
-        private readonly ICompanyRepository _companyRepository;
+        private readonly IOwnerRepository _ownerRepository;
         private readonly IUnitOfWork _unitOfWork;
-        public CompanyHasBeenAddedEventHandler(ICompanyRepository companyRepository, IUnitOfWork unitOfWork)
+        public CompanyHasBeenAddedEventHandler(IOwnerRepository ownerRepository, IUnitOfWork unitOfWork)
         {
-            _companyRepository = companyRepository;
+            _ownerRepository = ownerRepository;
             _unitOfWork = unitOfWork;
         }
         public async Task Handle(CompanyHasBeenAddedExternalEvent notification, CancellationToken cancellationToken)
         {
-            var company = Company.CreateCompany(notification.CompanyName);
-            await _companyRepository.Add(company);
+            var owner = await _ownerRepository.GetAsync(notification.OwnerId);
+
+            owner.AddCompany(notification.CompanyName);
+
+            _ownerRepository.Update(owner);
         }
     }
 }

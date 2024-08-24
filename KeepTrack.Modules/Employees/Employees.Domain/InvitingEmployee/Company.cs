@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Employees.Domain.Company
+namespace Employees.Domain.InvitingEmployee
 {
     public class Company : Entity, IAggregateRoot
     {

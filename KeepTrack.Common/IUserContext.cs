@@ -9,5 +9,6 @@ namespace KeepTrack.Common
     public interface IUserContext
     {
         Guid GetCrrentUserId { get; }
+        WorkerType GetWorkerType { get; }
     }
 }

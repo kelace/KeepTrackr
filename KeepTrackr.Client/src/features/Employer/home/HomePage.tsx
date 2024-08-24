@@ -15,7 +15,7 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { useSelector } from 'react-redux';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, Navigate } from 'react-router-dom';
 import { WorkerType } from '../../account/accountSlice';
 import Link from '@mui/material/Link';
 import { Link as RouterLink } from 'react-router-dom';
@@ -28,66 +28,67 @@ function HomePage() {
     const company : WorkerType = useSelector((state: any) => state.account.company );
     const navigate = useNavigate();
 
-    useEffect(() => {
+    //useEffect(() => {
 
-        if (workerType == WorkerType.Employee) {
-            navigate(`/company/${company}`);
-        } else {
-            navigate("/dashboard/");
-        }
-    }, [])
+    //    if (workerType == WorkerType.Employee) {
+    //        navigate(`/company/${company}`);
+    //    } else {
+    //        navigate("/dashboard/");
+    //    }
+    //}, [])
 
     return (
-        <Box sx={{ display: 'flex' }}>
-            <CssBaseline />
-            <AppBar
-                position="fixed"
-                sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
-            >
-                <Toolbar>
-                    <Typography variant="h6" noWrap component="div">
-                        Permanent drawer
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                sx={{
-                    width: drawerWidth,
-                    flexShrink: 0,
-                    '& .MuiDrawer-paper': {
-                        width: drawerWidth,
-                        boxSizing: 'border-box',
-                    },
-                }}
-                variant="permanent"
-                anchor="left"
-            >
-                <Toolbar />
-                <Divider />
-                <List>
-                    {[{ text: 'Dashboard', link: 'dashboard' }, { text: 'Tasks', link: 'tasks/companies' }, { text: 'Employees', link: 'employees' }, { text: 'Settings', link: 'configuration' }, { text: 'Subscription', link: 'subscription' }, { text: 'Companies', link: 'companies' }].map((item: any, index) => (
-                        <Link to={item.link} component={RouterLink} key={item.text}>
-                            <ListItem key={item.text} disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                    </ListItemIcon>
-                                    <ListItemText primary={item.text} />
-                                </ListItemButton>
-                            </ListItem>
-                        </Link>
+        <div>  <Outlet /></div>
+        //<Box sx={{ display: 'flex' }}>
+        //    <CssBaseline />
+        //    <AppBar
+        //        position="fixed"
+        //        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
+        //    >
+        //        <Toolbar>
+        //            <Typography variant="h6" noWrap component="div">
+        //                Permanent drawer
+        //            </Typography>
+        //        </Toolbar>
+        //    </AppBar>
+        //    <Drawer
+        //        sx={{
+        //            width: drawerWidth,
+        //            flexShrink: 0,
+        //            '& .MuiDrawer-paper': {
+        //                width: drawerWidth,
+        //                boxSizing: 'border-box',
+        //            },
+        //        }}
+        //        variant="permanent"
+        //        anchor="left"
+        //    >
+        //        <Toolbar />
+        //        <Divider />
+        //        <List>
+        //            {[{ text: 'Dashboard', link: 'dashboard' }, { text: 'Tasks', link: 'tasks/companies' }, { text: 'Employees', link: 'employees' }, { text: 'Settings', link: 'configuration' }, { text: 'Subscription', link: 'subscription' }, { text: 'Companies', link: 'companies' }].map((item: any, index) => (
+        //                <Link to={item.link} component={RouterLink} key={item.text}>
+        //                    <ListItem key={item.text} disablePadding>
+        //                        <ListItemButton>
+        //                            <ListItemIcon>
+        //                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+        //                            </ListItemIcon>
+        //                            <ListItemText primary={item.text} />
+        //                        </ListItemButton>
+        //                    </ListItem>
+        //                </Link>
     
-                    ))}
-                </List>
-            </Drawer>
-            <Box
-                component="main"
-                sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
-            >
-                <Toolbar />
-                <Outlet/>
-            </Box>
-        </Box>
+        //            ))}
+        //        </List>
+        //    </Drawer>
+        //    <Box
+        //        component="main"
+        //        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
+        //    >
+        //        <Toolbar />
+        //        <Outlet/>
+        //    </Box>
+        //</Box>
     );
 }
 

@@ -17,7 +17,7 @@ namespace Employees.Infrastructure.Repositories
         }
         public async Task<Owner> GetAsync(Guid id)
         {
-            return  await _context.Owners.Include(x => x.Employees).Where(x => x.Id == id).FirstOrDefaultAsync();
+            return  await _context.Owners.Include(x => x.Employees).Include(x => x.Companies).Include(x => x.Invitations).Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task AddAsync(Owner owner)

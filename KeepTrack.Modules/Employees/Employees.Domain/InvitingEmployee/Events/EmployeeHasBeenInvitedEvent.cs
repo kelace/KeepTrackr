@@ -13,7 +13,7 @@ namespace Employees.Domain.InvitingEmployee.Events
         public Guid InvitationId { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }    
-        public string CompanyName { get; set; }
+        public List<(Guid employeeId, string companyName)> Companies { get; set; }
         public Guid CompanyOwnerId { get; set; }
         public Guid MailId { get; set; }
     }

@@ -1,5 +1,4 @@
-﻿using Employees.Domain.Company;
-using Employees.Domain.InvitingEmployee;
+﻿using Employees.Domain.InvitingEmployee;
 using Microsoft.EntityFrameworkCore;
 
 namespace Employees.Infrastructure
@@ -20,7 +19,11 @@ namespace Employees.Infrastructure
 
             modelBuilder.HasDefaultSchema("emp");
 
-            modelBuilder.Entity<Company>().ToTable("Company");
+            modelBuilder.Entity<Company>(x =>
+            {
+                x.ToTable("Companies");
+                //x.HasMany<CompanyItem>().WithOne().HasForeignKey(x => new { x.OwnerId, x.CompanyName });
+            });
 
             modelBuilder.Entity<Owner>(x =>
             {
@@ -29,12 +32,22 @@ namespace Employees.Infrastructure
                 x.Ignore(x => x.Events);
             });
 
+            modelBuilder.Entity<Invitation>(x =>
+            {
+                x.Property( x=> x.Id).ValueGeneratedNever();
+            });
 
             modelBuilder.Entity<Employee>(x =>
             {
                 x.Property(x => x.Id).ValueGeneratedNever();
+                x.HasMany(x => x.Companies).WithOne().HasForeignKey(x => x.EmployeeId);
             });
 
+            modelBuilder.Entity<CompanyItem>(x =>
+            {
+                x.Ignore(x => x.Events);
+                x.ToTable("Employee_Company");
+            });
             //modelBuilder.Entity<Employee>().HasOne<Owner>().WithMany(x => x.Employees).HasForeignKey(x => x.OwnerId);
             //modelBuilder.Entity<Employee>().ToTable("Employees");
 

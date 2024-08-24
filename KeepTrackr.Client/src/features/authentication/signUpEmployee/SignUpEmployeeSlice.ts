@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import httpClient from '../../../app/httpClient';
 
+
 export const signUpEmployee = createAsyncThunk('signUpEmployee/signUp', async (employee: any) => {
 
     //const config = {

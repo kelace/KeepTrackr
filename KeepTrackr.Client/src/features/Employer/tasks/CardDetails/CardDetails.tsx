@@ -44,6 +44,8 @@ export default function CardDetails(props: any) {
 
     const labels = useSelector((x: any) => x.tasks.labels.entities.filter((c: any) => c.cardId == cardId));
 
+    const tasks = useSelector((x: any) => x.tasks.tasks.entities.filter((c: any) => c.cardId == cardId));
+
     const showAssignUser = useSelector((x: any) => x.tasks.openedAssign );
 
     const dispatch = useDispatch<AppDispatch>();
@@ -213,40 +215,40 @@ export default function CardDetails(props: any) {
                             </div>
 
                             <div className="my-2">
-                                {/*{values.task.length !== 0 ? (*/}
-                                {/*    values.task.map((item: any, index: any) => (*/}
-                                {/*    <div className="task__list d-flex align-items-start gap-2">*/}
-                                {/*      <input*/}
-                                {/*        className="task__checkbox"*/}
-                                {/*        type="checkbox"*/}
-                                {/*        defaultChecked={item.completed}*/}
-                                {/*        onChange={() => {*/}
-                                {/*          updateTask(item.id);*/}
-                                {/*        }}*/}
-                                {/*      />*/}
+                                {tasks.length !== 0 ? (
+                                    tasks.map((item: any, index: any) => (
+                                    <div className="task__list d-flex align-items-start gap-2">
+                                      <input
+                                        className="task__checkbox"
+                                        type="checkbox"
+                                        defaultChecked={item.completed}
+                                        onChange={() => {
+                                          updateTask(item.id);
+                                        }}
+                                      />
 
-                                {/*      <h6*/}
-                                {/*        className={`flex-grow-1 ${*/}
-                                {/*          item.completed === true ? "strike-through" : ""*/}
-                                {/*        }`}*/}
-                                {/*      >*/}
-                                {/*        {item.task}*/}
-                                {/*      </h6>*/}
-                                {/*      <Trash*/}
-                                {/*        onClick={() => {*/}
-                                {/*          removeTask(item.id);*/}
-                                {/*        }}*/}
-                                {/*        style={{*/}
-                                {/*          cursor: "pointer",*/}
-                                {/*          width: "18px",*/}
-                                {/*          height: "18px",*/}
-                                {/*        }}*/}
-                                {/*      />*/}
-                                {/*    </div>*/}
-                                {/*  ))*/}
-                                {/*) : (*/}
-                                {/*  <></>*/}
-                                {/*)}*/}
+                                      <h6
+                                        className={`flex-grow-1 ${
+                                          item.completed === true ? "strike-through" : ""
+                                        }`}
+                                      >
+                                        {item.name}
+                                      </h6>
+                                      <Trash
+                                        onClick={() => {
+                                          removeTask(item.id);
+                                        }}
+                                        style={{
+                                          cursor: "pointer",
+                                          width: "18px",
+                                          height: "18px",
+                                        }}
+                                      />
+                                    </div>
+                                  ))
+                                ) : (
+                                  <></>
+                                )}
 
                                 <Editable
                                     parentClass={"task__editable"}

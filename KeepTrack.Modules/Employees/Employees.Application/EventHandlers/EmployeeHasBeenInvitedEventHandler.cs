@@ -25,7 +25,7 @@ namespace Employees.Application.EventHandlers
     
             ";
 
-            var email = emailTemplate.Replace("<employeeName>", notification.Name).Replace("<companyName>", notification.CompanyName);
+            var email = emailTemplate.Replace("<employeeName>", notification.Name);
 
             await _mediator.Publish(new EmployeeHasBeenInvitedInternalEvent
             {
@@ -33,7 +33,7 @@ namespace Employees.Application.EventHandlers
                 Name = notification.Name,
                 Email = email,
                 EmployeeId = notification.EmployeeId,
-                CompanyName = notification.CompanyName,
+                Companies = notification.Companies,
                 MailId = notification.MailId,
                 CompanyOwner = notification.CompanyOwnerId
             });

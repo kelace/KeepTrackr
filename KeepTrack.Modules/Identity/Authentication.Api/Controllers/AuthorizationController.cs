@@ -1,8 +1,10 @@
 ﻿using ApplicationIdentity.Application.Commands.SignUpUser;
+using Authentication.Application.Commands.SignUpEmployee;
 using Authorization.Api.Models.Requests;
 using Authorization.Api.Services.Authentication;
 using Authorization.Api.Services.Authentication.Request;
 using Authorization.Entities;
+using KeepTrack.Common;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -71,11 +73,13 @@ namespace Authorization.Api.Controllers
         [Route("invitation/signup")]
         public async Task<AuthenticationSignUpResult> InvitationSignup(SignUpEmployee employee)
         {
-            return await _mediator.Send<AuthenticationSignUpResult>(new SignUpUserCommand
+            return await _mediator.Send<AuthenticationSignUpResult>(new SignUpEmployeeCommand
             {
+                EmployeeId = employee.EmployeeId,
                 Name = employee.Name,
                 Password = employee.Password,
                 ConfirmPassword = employee.ConfirmPassword,
+                Token = employee.Token,
             });
         }
     }

@@ -10,7 +10,6 @@ import { useParams } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import CardDetails from './CardDetails/CardDetails';
 
-
 function TasksPage() {
     const [data, setData]: any = useState([]);
     const dispatch = useDispatch<AppDispatch>();

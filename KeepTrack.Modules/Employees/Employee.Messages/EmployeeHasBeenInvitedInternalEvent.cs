@@ -10,7 +10,7 @@ namespace Employees.Messages
         public string EmployeeEmail { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
-        public string CompanyName { get; set; }
+        public List<(Guid employeeId, string companyName)> Companies { get; set; }
         public Guid CompanyOwner { get; set; }
     }
 }

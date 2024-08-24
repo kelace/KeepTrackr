@@ -1,6 +1,5 @@
 ﻿using Employees.Application;
 using Employees.Domain;
-using Employees.Domain.Company;
 using Employees.Domain.InvitingEmployee;
 using Employees.Infrastructure;
 using Employees.Infrastructure.Repositories;
@@ -14,10 +13,14 @@ namespace Employees.Api.Extensions
         public static IMvcBuilder AddEmployeeModule(this IMvcBuilder mvcBuilder, string connectionString)
         {
             mvcBuilder.AddApplicationPart(typeof(Program).Assembly);
-            mvcBuilder.Services.AddDbContext<EmployeeDbContext>(options => options.UseSqlServer(connectionString, x => x.MigrationsAssembly("KeepTrackr.Api")));
+            mvcBuilder.Services.AddDbContext<EmployeeDbContext>(options =>
+            {
+                options.UseSqlServer(connectionString, x => x.MigrationsAssembly("KeepTrackr.Api"));
+                options.EnableSensitiveDataLogging();
+            });
 
             mvcBuilder.Services.AddTransient<IOwnerRepository, OwnerRepository>();
-            mvcBuilder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
+            //mvcBuilder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
             return mvcBuilder;
         } 
     }

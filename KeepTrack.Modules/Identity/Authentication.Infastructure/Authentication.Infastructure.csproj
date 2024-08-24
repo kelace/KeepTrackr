@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\KeepTrack.Common\KeepTrack.Common.csproj" />
     <ProjectReference Include="..\Authentication.Entities\Authentication.Entities.csproj" />
   </ItemGroup>
 

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Authentication.Application.Commands.SignUpEmployee
 {
@@ -20,7 +21,11 @@ namespace Authentication.Application.Commands.SignUpEmployee
         public async Task<AuthenticationSignUpResult> Handle(SignUpEmployeeCommand request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByIdAsync(request.EmployeeId.ToString());
-            var verificationResult = await _userManager.VerifyUserTokenAsync(user, TokenOptions.DefaultProvider, "SomeAnother", request.Token);
+
+            var tokenDecoded = HttpUtility.UrlDecode(request.Token);
+
+            var verificationResult = await _userManager.VerifyUserTokenAsync(user, TokenOptions.DefaultProvider, "InvitationUser", request.Token);
+
             _userManager.PasswordHasher.HashPassword(user, request.Password);
 
             if (!verificationResult) return new AuthenticationSignUpResult
@@ -35,27 +40,32 @@ namespace Authentication.Application.Commands.SignUpEmployee
                 Succeeded = false
             };
 
-            var passwordValidationResult = await _userManager.CheckPasswordAsync(user, request.Password);
+            //var passwordValidationResult = await _userManager.CheckPasswordAsync(user, request.Password);
 
-            if (!passwordValidationResult)
-            {
+            //if (!passwordValidationResult)
+            //{
 
-                return new AuthenticationSignUpResult
-                {
-                    Errors = new List<IdentityError>
-                    {
-                        new IdentityError
-                        {
-                            Description = "Password is not correct"
-                        }
-                    },
-                    Succeeded = false
-                };
-            }
+            //    return new AuthenticationSignUpResult
+            //    {
+            //        Errors = new List<IdentityError>
+            //        {
+            //            new IdentityError
+            //            {
+            //                Description = "Password is not correct"
+            //            }
+            //        },
+            //        Succeeded = false
+            //    };
+            //}
+
+            user.UserName = request.Name;
+            user.Active = true;
 
             var hashedPassword = _userManager.PasswordHasher.HashPassword(user, request.Password);
             user.PasswordHash = hashedPassword;
+
             var result = await _userManager.UpdateAsync(user);
+
             return new AuthenticationSignUpResult
             {
                 Errors = result.Errors.ToList(),

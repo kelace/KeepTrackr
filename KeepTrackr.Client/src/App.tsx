@@ -7,6 +7,9 @@ import { Outlet, redirect, useNavigate, useLocation, Navigate } from 'react-rout
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch } from './app/store';
 import { clear } from './features/Employer/subscription/SubscriptionSlice';
+import Layout from './features/layout/Layout';
+
+
 
 function App() {
     const isAuthenticated = useSelector((state: any) => {
@@ -18,17 +21,17 @@ function App() {
     const navigate = useNavigate();
 
    React.useEffect(() => {
-       if (!isAuthenticated) {
-           navigate("/authentication/signin");
-       }
+/*       navigate("/authentication/signin");*/
 
-       dispatch(clear());
+/*       dispatch(clear());*/
 
-   }, [location]);
+    }, [location]);
+
+   if (!isAuthenticated) return <Navigate to="/authentication/signin" />;
 
   return (
       <div className="App">
-          {isAuthenticated ? <Outlet />  : <Navigate to="/authentication/signin" />}
+          <Layout><Outlet /> </Layout>
     </div>
   );
 }

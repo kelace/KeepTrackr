@@ -23,7 +23,7 @@ namespace Employees.Application.Queries.GetAllEmployees
             using(var connection = new SqlConnection("Server=DESKTOP-6JEENNA;Database=KeepTrackrDB;User Id=sa;Password=sa;TrustServerCertificate=True"))
             {
                 var ownerId = _userContext.GetCrrentUserId;
-                var sql = $"select Id, Name from emp.Employees where OwnerId = @OwnerId";
+                var sql = $"select Id, Name, OwnerId from emp.Employees where OwnerId = @OwnerId";
 
                 var employees = await connection.QueryAsync<EmployeeDTO>(sql, new {OwnerId = ownerId});
 

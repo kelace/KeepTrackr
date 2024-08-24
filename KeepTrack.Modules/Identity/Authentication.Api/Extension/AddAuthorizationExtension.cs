@@ -15,7 +15,11 @@ namespace Authorization.Api.Extension
 
             var persistanceAssemblyName = typeof(AuthContext).Assembly.GetName().Name;
 
-            builder.Services.AddDbContext<AuthContext>(options => options.UseSqlServer(connectionString, x => x.MigrationsAssembly("KeepTrackr.Api")));
+            builder.Services.AddDbContext<AuthContext>(options =>
+            {
+                options.UseSqlServer(connectionString, x => x.MigrationsAssembly("KeepTrackr.Api"));
+                options.EnableSensitiveDataLogging();
+            });
 
             builder.Services.AddTransient<IAuthenticationService, AuthenticationService>();
             builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
@@ -26,6 +30,7 @@ namespace Authorization.Api.Extension
     .AddDefaultTokenProviders();
 
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
+            //builder.Services.AddHttpContextAccessor();
 
             return builder;
         }

@@ -64,8 +64,8 @@ namespace TaskManagment.Infrastructure.Persistance
             {
                 x.Ignore(x => x.Events);
                 x.OwnsOne(x => x.CompanyId);
-                x.HasMany<Label>().WithOne().HasForeignKey(x => x.CardId);
-                x.HasMany<CardTask>().WithOne().HasForeignKey(x => x.CardId);
+                x.HasMany<Label>(x => x.Labels).WithOne().HasForeignKey(x => x.CardId);
+                x.HasMany<CardTask>(x => x.Tasks).WithOne().HasForeignKey(x => x.CardId);
             });
 
             modelBuilder.Entity<Domain.CardTask>(x =>

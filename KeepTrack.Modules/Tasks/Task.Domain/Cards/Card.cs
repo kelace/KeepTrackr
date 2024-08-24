@@ -38,7 +38,7 @@ namespace TaskManagment.Domain.Cards
 
         public void AddTask(string name)
         {
-            Tasks.Add(new CardTask(name));
+            Tasks.Add(new CardTask(name, Id));
         }
 
         public void AddLabel(string title, string color)

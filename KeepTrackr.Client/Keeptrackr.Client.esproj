@@ -15,11 +15,11 @@
     <Folder Include="src\app\" />
     <Folder Include="src\features\authentication\signUpEmployee\" />
     <Folder Include="src\features\Employer\dashboard\" />
-    <Folder Include="src\features\Employee\dashboardEmployees\" />
     <Folder Include="src\features\Employer\companies\" />
     <Folder Include="src\features\Employer\tasksCompanies\" />
     <Folder Include="src\features\Employer\tasks\Calendar\" />
     <Folder Include="src\features\Employer\tasks\UserAssign\" />
+    <Folder Include="src\components\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptConfiguration Remove="src\common\**" />

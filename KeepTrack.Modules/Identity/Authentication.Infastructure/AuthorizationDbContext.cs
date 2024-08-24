@@ -1,4 +1,5 @@
 ﻿using Authorization.Entities;
+using KeepTrack.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,12 @@ namespace Authorization.Infastructure
             });
 
             modelBuilder.Entity<IdentityRole<Guid>>().HasData(defaultRoles);
+
+
+            modelBuilder.Entity<Mail>(x =>
+            {
+                x.Property(x => x.Id).ValueGeneratedNever();
+            });
 
         }
     }

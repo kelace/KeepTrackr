@@ -1,4 +1,4 @@
-﻿namespace Authorization.Entities
+﻿namespace KeepTrack.Common
 {
     public enum WorkerType
     {
@@ -6,3 +6,4 @@
         Employer
     }
 }
+

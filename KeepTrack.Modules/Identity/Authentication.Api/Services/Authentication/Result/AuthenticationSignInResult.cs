@@ -17,7 +17,7 @@ namespace Authorization.Api.Services.Authentication
         public bool UserNotExisted { get; set; }
         public string Description { get; set; }
         public string Token { get; private set; }
-        public WorkerType WorkerType { get; set; }
+        public string WorkerType { get; set; }
         public string Name { get; set; }
     }
 }

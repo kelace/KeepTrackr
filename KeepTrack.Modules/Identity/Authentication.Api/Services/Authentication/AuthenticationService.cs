@@ -26,12 +26,16 @@ namespace Authorization.Api.Services.Authentication
         public async Task<AuthenticationSignInResult> SignInUser(SignInUser user)
         {
             var existedUser = await _userManager.FindByNameAsync(user.Name);
+            
 
             if (existedUser == null) return new AuthenticationSignInResult
             {
                 Description = "User is not existed",
                 UserNotExisted = true,
             };
+
+            var roles = await _userManager.GetRolesAsync(existedUser);
+            var role = roles.First();
 
             var signinResult = await _signInManager.CheckPasswordSignInAsync(existedUser, user.Password, lockoutOnFailure: false);
 
@@ -43,7 +47,7 @@ namespace Authorization.Api.Services.Authentication
             var claims = new List<Claim>
             {
                 new Claim("id", existedUser.Id.ToString()),
-                new Claim("type", WorkerType.Employer.ToString()),
+                new Claim("type", role),
                 new Claim("name", user.Name)
             };
 
@@ -63,7 +67,7 @@ namespace Authorization.Api.Services.Authentication
             return new AuthenticationSignInResult(true, token)
             {
                 Name = user.Name,
-                WorkerType = WorkerType.Employer,
+                WorkerType = role,
             };
         }
     }

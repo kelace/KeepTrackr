@@ -9,6 +9,8 @@ namespace Employees.Domain.InvitingEmployee
 {
     public class Invitation : Entity
     {
+        public Invitation(Guid id) : base(id)
+        { }
         public  Guid EmployeeId { get; set; }
         public Guid MailId { get; set; }
     }

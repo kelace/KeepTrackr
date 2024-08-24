@@ -25,7 +25,7 @@ namespace Employees.Application.Commands.InviteEmployee
             var currentUserId = _userContext.GetCrrentUserId;
             var owner = await _ownerRepository.GetAsync(currentUserId);
 
-            var result = owner.InviteNewEmployee(request.Email, request.Name);
+            var result = owner.InviteNewEmployee(request.Email, request.Name, request.Companies);
 
             if (result.IsError) return result;
 
@@ -33,33 +33,8 @@ namespace Employees.Application.Commands.InviteEmployee
 
             await _unitOfWork.SaveAsync();
 
-            var mail = await GetMail(result.Value.MailId);
-            result.Value.Email = mail;
-
             return result.Value;
 
-        }
-
-        private async Task<string> GetMail(Guid invitationId)
-        {
-            var result = string.Empty;
-            try
-            {
-                using (var connection = new SqlConnection("Server=DESKTOP-6JEENNA;Database=KeepTrackrDB;User Id=sa;Password=sa;TrustServerCertificate=True"))
-                {
-                    var sql = "select m.Value from dbo.Mails m join emp.Invitation i on m.Id = i.MailId where m.Id = @Id";
-
-                    result = await connection.QueryFirstOrDefaultAsync<string>(sql, new { Id = invitationId });
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-
-
-            return result;
         }
     }
 }

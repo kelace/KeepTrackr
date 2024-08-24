@@ -23,10 +23,10 @@ namespace TaskManagment.Domain.Executors
             return new Label(name, color, cardId);
         }
 
-        public static Executor CreateEmployer(Guid id, string name, Guid ownerId )
+        public static Executor CreateEmployer(Guid id, string name, Guid ownerId, List<(Guid ownerId, string name)> companies )
         {
-            var companies = new List<Company>();
-            companies.Add(new Company(name, ownerId, id ));
+
+            var comps = companies.Select(x => new Company(x.name, x.ownerId, id)).ToList();
 
             return new Executor
             {
@@ -34,7 +34,7 @@ namespace TaskManagment.Domain.Executors
                 Created = DateTime.UtcNow,
                 Name = name,
                 ExecutorType = ExecutorType.Employer,
-                Companies = companies
+                Companies = comps
             };
         }
 

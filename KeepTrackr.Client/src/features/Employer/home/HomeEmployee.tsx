@@ -1,9 +1,9 @@
 import React from 'react';
 
-function InvitationSignUpPage() {
+function HomeEmployee() {
   return (
     <p>Hello world!</p>
   );
 }
 
-export default InvitationSignUpPage;
+export default HomeEmployee;

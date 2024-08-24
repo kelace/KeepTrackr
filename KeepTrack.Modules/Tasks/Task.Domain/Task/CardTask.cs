@@ -16,9 +16,10 @@ namespace TaskManagment.Domain
         public bool Completed { get; private set; }
 
 
-        public CardTask(string name)
+        public CardTask(string name, Guid cardId)
         {
             Name = name;
+            CardId = cardId;
         }
 
         //public void AssignExecutorToTask(Guid id)

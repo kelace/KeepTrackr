@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import companiesReducer from "../features/Employer/companies/CompaniesSlice";
 import subscriptionReducers from '../features/Employer/subscription/SubscriptionSlice';
 import tasksReducer from '../features/Employer/tasks/tasksPageSlice';
+import leyoutReducer from '../features/layout/layoutSlice';
 
 const token = localStorage.getItem('token');
 
@@ -22,7 +23,10 @@ interface JwtData {
 }
 
 let jwtDecoded: JwtData = {} as JwtData;
-let account: CurrentAccount = {} as CurrentAccount;
+let account: CurrentAccount = {
+    name: '',
+    isAuthenticated: false
+};
 
 if (token != null) {
     try {
@@ -46,6 +50,7 @@ const store = configureStore({
         companies: companiesReducer,
         subscription: subscriptionReducers,
         tasks: tasksReducer,
+        layout: leyoutReducer
 
     },
     preloadedState: {

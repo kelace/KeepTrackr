@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate, Outlet } from 'react-router-dom';
 import AuthenticationPage from './features/account/AuthenticationPage';
 import { Provider } from 'react-redux';
 import store from './app/store'
@@ -13,12 +13,15 @@ import HomePage from './features/Employer/home/HomePage';
 import TasksPage from './features/Employer/tasks/TasksPage';
 import TasksCompanies from './features/Employer/tasksCompanies/TasksCompanies';
 import DashboardPage from './features/Employer/dashboard/DashboardPage';
-import EmployeesHomePage from './features/Employee/employeesHome/EmployeesHomePage';
-import DashboardEmployeesPage from './features/Employee/dashboardEmployees/DashboardEmployeesPage';
+//import EmployeesHomePage from './features/Employee/employeesHome/EmployeesHomePage';
+//import DashboardEmployeesPage from './features/Employee/dashboardEmployees/DashboardEmployeesPage';
 import EmployeeTab from './features/Employer/employee/EmployeeTabt';
 import SignUpEmployee from './features/authentication/signUpEmployee/SignUpEmployee';
 import CompaniesComponent from './features/Employer/companies/CompaniesComponent';
 import SubscriptionPage from './features/Employer/subscription/SubscriptionPage';
+import WorkerTypeProtector from './app/WorkerTypeProtector';
+import Layout from './features/layout/Layout';
+import { WorkerType } from './features/account/accountSlice';
 
 const router = createBrowserRouter([
     {
@@ -26,49 +29,56 @@ const router = createBrowserRouter([
         element: <App />,
         children: [
             {
-                path: "/",
-                element: <HomePage />,
-                children: [
-                    {
-                        path:'/dashboard',
-                        element: <DashboardPage />,
-                    },
-                    {
-                        path: '/tasks/:company',
-                        element: <TasksPage />,
-                    },
-                    {
-                        path: '/tasks/companies',
-                        element: <TasksCompanies />,
-                    },
-                    {
-                        path: '/configuration',
-                        element: <DashboardPage />,
-                    },
-                    {
-                        path: '/employees',
-                        element: <EmployeeTab />,
-                    },
-                    {
-                        path: '/subscription',
-                        element: <SubscriptionPage />,
-                    },
-                    {
-                        path: '/companies',
-                        element: <CompaniesComponent />,
-                    }
-                ]
+                index: true,
+                element: <Navigate to="/dashboard"/>
             },
             {
-            path: "/company/:company/",
-            element: <EmployeesHomePage />,
-            children:[
-                {
-                    path: "/company/:company/dashboard",
-                    index: true,
-                    element: <DashboardEmployeesPage/>
-                }
-            ]
+                path: '/dashboard',
+                element: <WorkerTypeProtector type={WorkerType.Employer}><DashboardPage /></WorkerTypeProtector>,
+            },
+            {
+                path: '/tasks/:company',
+                element: <WorkerTypeProtector type={WorkerType.Employer}><TasksPage /></WorkerTypeProtector>,
+            },
+            {
+                index: true,
+                path: '/tasks/companies',
+                element: <WorkerTypeProtector type={WorkerType.Employer}><TasksCompanies /></WorkerTypeProtector>,
+            },
+            {
+                path: '/configuration',
+                element: <WorkerTypeProtector type={WorkerType.Employer}><DashboardPage /></WorkerTypeProtector>,
+            },
+            {
+                path: '/employees',
+                element: <WorkerTypeProtector type={WorkerType.Employer}><EmployeeTab /></WorkerTypeProtector>,
+            },
+            {
+                path: '/subscription',
+                element: <WorkerTypeProtector type={WorkerType.Employer}><SubscriptionPage /></WorkerTypeProtector>,
+            },
+            {
+                path: '/companies',
+                element: <WorkerTypeProtector type={WorkerType.Employer}><CompaniesComponent /></WorkerTypeProtector>,
+            },
+            {
+                path: "/employee",
+                element: <WorkerTypeProtector type={WorkerType.Employee}><Outlet /></WorkerTypeProtector>,
+                children: [
+                    {
+                        path: "companies",
+                        element: <TasksCompanies/> 
+                    },
+                    {
+                        path: "tasks/:company",
+                        element: <TasksPage />
+                    },
+                    {
+                        path: "settings",
+                        index: true,
+                        element: <div>employee settings</div> 
+                    }
+                ]
             }
         ]
     },

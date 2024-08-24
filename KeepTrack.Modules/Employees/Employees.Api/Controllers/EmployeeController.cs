@@ -4,6 +4,7 @@ using Employees.Application.Queries.GetAllEmployees;
 using Employees.Domain.Base;
 using Employees.Domain.InvitingEmployee.Result;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Employees.Api.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [ApiController]
     public class EmployeeController : ControllerBase
     {

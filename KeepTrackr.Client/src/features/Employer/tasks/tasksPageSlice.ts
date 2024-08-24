@@ -183,8 +183,32 @@ export const fetchAllBoards = createAsyncThunk('tasks/fetchBoards', async (compa
 //    return state.tasks.boards.forEach
 //};
 
-export interface TaskPagwState {
+export interface Label {
 
+}
+
+export interface User {
+
+}
+
+export interface Task {
+
+}
+
+export interface TaskPageState {
+    openedCalendar: string,
+    labelShow: boolean,
+    openedAssign: boolean,
+    openedCardId: string,
+    color: string,
+    openedLabelModal: boolean,
+    newLabelName: string,
+    newBoard: string,
+    boards: Board[],
+    cards: Card[],
+    labels: Label[],
+    users: User[],
+    tasks: Task[],
 };
 
 const initialState = {
@@ -216,6 +240,9 @@ const initialState = {
     },
     users: {
         entities:[]
+    },
+    tasks: {
+        entites:[]
     }
 
 };
@@ -260,10 +287,12 @@ const slice = createSlice({
 
     initialState: initialState,
     extraReducers(builder) {
+
         builder.addCase(fetchAllBoards.fulfilled, (state: any, action: any) => {
             state.boards.entities = action.payload.boards;
             state.cards.entities = action.payload.cards;
             state.labels.entities = action.payload.labels;
+            state.tasks.entities = action.payload.tasks;
         });
 
         builder.addCase(reorderBoard.fulfilled, (state: any, action: any) => {

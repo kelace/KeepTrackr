@@ -1,4 +1,5 @@
 ﻿using Authorization.Entities;
+using KeepTrack.Common;
 using Microsoft.AspNetCore.Identity;
 
 namespace ApplicationIdentity.Application.Commands.SignUpUser

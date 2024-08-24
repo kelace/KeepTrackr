@@ -74,7 +74,6 @@ namespace TaskManagment.Application.Queries.GetAllBoardsInfo
                 var users = result.SelectMany(x => x.Users).GroupBy(x => x.Id).Select(x => x.First()).ToList();
                 var tasks = result.SelectMany(x => x.Tasks).GroupBy(x => x.Id).Select(x => x.First()).ToList();
 
-
                 //return boards.GroupBy(x => new {x.Boards, x.Cards}).Select(b =>
                 //{
                 //    var board = b.First();
@@ -87,7 +86,8 @@ namespace TaskManagment.Application.Queries.GetAllBoardsInfo
                     Boards = boards,
                     Cards = cards,
                     Labels = labels,
-                    Users = users
+                    Users = users,
+                    Tasks = tasks
                 };
             }
         }

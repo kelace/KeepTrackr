@@ -13,12 +13,14 @@ import { getAllCompanies } from '../companies/CompaniesSlice';
 import { AppDispatch } from '../../../app/store';
 import Link from '@mui/material/Link';
 import { Link as RouterLink } from 'react-router-dom';
+import { WorkerType } from '../../account/accountSlice';
 
 function TasksCompanies() {
 
     const companies = useSelector((x: any) => x.companies.companies);
     const dispatch = useDispatch<AppDispatch>();
 
+    const workerType = useSelector( (x : any) => x.account.workerType ); 
 
     useEffect(() => {
         (async () => {
@@ -33,7 +35,7 @@ function TasksCompanies() {
 
                     {companies.map((company: any) =>
 
-                        <Link to={`/tasks/${company.name}`} component={RouterLink} key={company.id}>
+                        <Link to={workerType == WorkerType.Employer ? `/tasks/${company.name}` : `/employee/tasks/${company.name}`} component={RouterLink} key={company.id}>
 
                             <ListItem disablePadding>
                                 {company.name}

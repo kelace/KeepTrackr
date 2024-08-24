@@ -1,44 +1,72 @@
-import React, { useState, ChangeEvent, MouseEvent } from 'react';
+import React, { useState, ChangeEvent, MouseEvent, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { inviteEmployee } from './employeesSlice';
-import { AppDispatch } from '../../../app/store';
+import { inviteEmployee, updateNewEmployee, fetchEmployees } from './employeesSlice';
+import { AppDispatch, IRootState } from '../../../app/store';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 function EmployeeTab() {
+
     const dispatch = useDispatch<AppDispatch>();
 
-    const [inviteData, setInviteData] = useState({
-        email: '',
-        name: ''
-    });
+    useEffect(() => {
+
+        dispatch(fetchEmployees());
+
+    }, []);
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+
+    const employees = useSelector((x: any) => x.employerEmployees.employees);
+
+    const newEmployee = useSelector((x: any) => x.employerEmployees.newEmployee);
+
     const modalText = useSelector((state: any) => state.employerEmployees.modalText);
 
+    const companies = useSelector((x: IRootState) => x.companies.companies);
+
     const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setInviteData({
-            ...inviteData,
+
+        dispatch(updateNewEmployee({
+            ...newEmployee,
             email: e.target.value
-        })
+        }));
+        //setInviteData({
+        //    ...inviteData,
+        //    email: e.target.value
+        //})
     };
 
     const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setInviteData({
-            ...inviteData,
+
+        dispatch(updateNewEmployee({
+            ...newEmployee,
             name: e.target.value
-        })
+        }));
+        //setInviteData({
+        //    ...inviteData,
+        //    name: e.target.value
+        //})
     };
+
+    const handleCompanyChange = (e: SelectChangeEvent<string[]>) => {
+        dispatch(updateNewEmployee({
+            ...newEmployee,
+            companies: e.target.value
+        }));
+    }
 
     const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        dispatch(inviteEmployee(inviteData));
+        dispatch(inviteEmployee(newEmployee));
         handleOpen();
     };
 
@@ -68,31 +96,54 @@ function EmployeeTab() {
                         Text in a modal
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        { modalText }
+                        {modalText}
                     </Typography>
                 </Box>
             </Modal>
             <form >
-            
-                    <TextField id="employee-email"
-                        label="Employee email"
+
+                <TextField id="employee-email"
+                    label="Employee email"
                     fullWidth
                     margin="dense"
-                    onChange={handleEmailChange }
-                        name="employee-email" variant="outlined" />
-       
-                    <TextField id="employee-name"
-                        label="Employee name"
+                    value={newEmployee.email}
+                    onChange={handleEmailChange}
+                    name="employee-email" variant="outlined" />
+
+                <TextField id="employee-name"
+                    label="Employee name"
                     fullWidth
                     margin="dense"
+                    value={newEmployee.name}
                     onChange={handleNameChange}
-                        name="employee-name" variant="outlined" />
+                    name="employee-name" variant="outlined" />
+
+                <Select
+                    labelId="demo-multiple-name-label"
+                    id="demo-multiple-name"
+                    onChange={handleCompanyChange}
+                    multiple
+                    value={newEmployee.companies}
+
+                >
+                    {companies.map((company: any) => (
+                        <MenuItem
+                            key={company.name}
+                            value={company.name}
+                        >
+                            {company.name}
+                        </MenuItem>
+                    ))}
+                </Select>
 
                 <Button onClick={handleSubmit} variant="contained">Invite</Button>
 
             </form>
-      </div>
-  );
+
+            {employees.map((x: any) => <div key={x.id}>{x.name}</div>)}
+
+        </div>
+    );
 }
 
 export default EmployeeTab;

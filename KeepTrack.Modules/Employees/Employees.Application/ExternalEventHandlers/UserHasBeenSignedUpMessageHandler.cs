@@ -17,7 +17,7 @@ namespace Employees.Application.InternalEventHandlers
         }
         public async Task Handle(UserHasBeenSignedUpMessage notification, CancellationToken cancellationToken)
         {
-            var newOwner = new Owner(notification.UserId);
+            var newOwner = Owner.CreateOwner(notification.UserId);
             await _ownerRepository.AddAsync(newOwner);
         }
     }

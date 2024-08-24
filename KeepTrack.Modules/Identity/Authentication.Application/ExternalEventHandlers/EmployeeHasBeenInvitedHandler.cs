@@ -1,6 +1,7 @@
 ﻿using Authorization.Entities;
 using Authorization.Infastructure;
 using Employees.Messages;
+using KeepTrack.Common;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Authentication.Application.ExternalEventHandlers
 {
@@ -43,7 +45,8 @@ namespace Authentication.Application.ExternalEventHandlers
             await _userManager.AddToRoleAsync(newUser, WorkerType.Employee.ToString());
 
             var invitationToken = await _userManager.GenerateUserTokenAsync(newUser, TokenOptions.DefaultProvider, "InvitationUser");
-            var link = $"/authentication/invitation/signup?token={invitationToken};user={notification.EmployeeId}";
+            var tokenEncoded = HttpUtility.UrlEncode(invitationToken);
+            var link =  $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}{_httpContextAccessor.HttpContext.Request.PathBase}/authentication/invitation/signup?token={tokenEncoded}&user={notification.EmployeeId}";
 
             var mailValue = notification.Email.Replace("<link>", link);
 
@@ -54,7 +57,6 @@ namespace Authentication.Application.ExternalEventHandlers
             };
 
             await _context.Mails.AddAsync(mail);
-            await _context.SaveChangesAsync();
         }
     }
     

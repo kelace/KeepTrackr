@@ -11,12 +11,12 @@ namespace Employees.Domain.InvitingEmployee
     {
         public Employee(Guid id) : base(id)
         {
-
         }
+
         public Guid OwnerId { get;  set; }
         public string Name { get;  set; }
         public string Email { get;  set; }
-        //public Company? Company { get; private set; }
+        public List<CompanyItem> Companies { get;  set; }
 
         //public Employee(Guid id, Guid ownerId, string name, string email) 
         //{
