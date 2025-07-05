@@ -60,6 +60,7 @@ namespace Authentication.Application.Commands.SignUpEmployee
 
             user.UserName = request.Name;
             user.Active = true;
+            user.OwnerId = request.OwnerId;
 
             var hashedPassword = _userManager.PasswordHasher.HashPassword(user, request.Password);
             user.PasswordHash = hashedPassword;

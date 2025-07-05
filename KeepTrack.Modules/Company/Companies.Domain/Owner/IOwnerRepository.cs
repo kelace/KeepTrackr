@@ -9,6 +9,7 @@ namespace Companies.Domain
     public interface IOwnerRepository
     {
         Task<Owner> Get(Guid id);
+        Task<Owner> GetCurrent();
         Task Add(Owner owner);
         void Update(Owner owner);
     }

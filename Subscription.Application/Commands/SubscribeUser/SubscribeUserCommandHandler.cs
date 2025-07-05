@@ -1,34 +1,34 @@
 ﻿using KeepTrack.Common;
 using MediatR;
-using Subscription.Domain.Users;
+using Subscription.Domain.OwnerAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Subscription.Application.Commands.SubscribeUser
+namespace SubscriptionAndPlan.Application.Commands.SubscribeUser
 {
     public class SubscribeUserCommandHandler : IRequestHandler<SubscribeUserCommand>
     {
         private readonly IUserContext _userContext;
-        private readonly IUserRepository _userRepository;
+        private readonly IOwnerRepository _ownerRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public SubscribeUserCommandHandler(IUserContext userContext, IUserRepository userRepository, IUnitOfWork unitOfWork)
+        public SubscribeUserCommandHandler(IUserContext userContext, IOwnerRepository ownerRepository, IUnitOfWork unitOfWork)
         {
             _userContext = userContext;
-            _userRepository = userRepository;
+            _ownerRepository = ownerRepository;
             _unitOfWork = unitOfWork;
         }
 
         public async Task Handle(SubscribeUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.Get(_userContext.GetCrrentUserId);
+            var owner = await _ownerRepository.Get(_userContext.GetCrrentUserId);
 
-            user.SubscribeTo(request.Type);
+            owner.ChangeSubscriptionPlan(request.PlanId);
 
-            _userRepository.Update(user);
+            _ownerRepository.Update(owner);
 
             await _unitOfWork.SaveAsync();
         }

@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Subscription.Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Subscription.Infrastructure.Repositories
+namespace SubscriptionAndPlan.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {

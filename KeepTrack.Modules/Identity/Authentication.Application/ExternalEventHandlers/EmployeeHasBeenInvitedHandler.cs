@@ -15,7 +15,7 @@ using System.Web;
 
 namespace Authentication.Application.ExternalEventHandlers
 {
-    public class EmployeeHasBeenInvitedHandler : INotificationHandler<EmployeeHasBeenInvitedInternalEvent>
+    public class EmployeeHasBeenInvitedHandler : INotificationHandler<EmployeeHasBeenInvitedExternalEvent>
     {
         private readonly AuthContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -30,7 +30,7 @@ namespace Authentication.Application.ExternalEventHandlers
             _roleManager = roleManager;
             _httpContextAccessor = httpContextAccessor;
         }
-        public async Task Handle(EmployeeHasBeenInvitedInternalEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(EmployeeHasBeenInvitedExternalEvent notification, CancellationToken cancellationToken)
         {
 
             var newUser = new ApplicationUser

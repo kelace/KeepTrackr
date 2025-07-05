@@ -1,4 +1,4 @@
-﻿using Employees.Domain.InvitingEmployee.Events;
+﻿using Employees.Domain.OwnerAggregate.Events.EmployeeEvents;
 using Employees.Messages;
 using MediatR;
 using System;
@@ -27,15 +27,15 @@ namespace Employees.Application.EventHandlers
 
             var email = emailTemplate.Replace("<employeeName>", notification.Name);
 
-            await _mediator.Publish(new EmployeeHasBeenInvitedInternalEvent
+            await _mediator.Publish(new EmployeeHasBeenInvitedExternalEvent
             {
                 EmployeeEmail = notification.Email,
                 Name = notification.Name,
                 Email = email,
                 EmployeeId = notification.EmployeeId,
-                Companies = notification.Companies,
-                MailId = notification.MailId,
-                CompanyOwner = notification.CompanyOwnerId
+                //Companies = notification.Companies,
+                //MailId = notification.MailId,
+                //CompanyOwner = notification.CompanyOwnerId
             });
 
         }

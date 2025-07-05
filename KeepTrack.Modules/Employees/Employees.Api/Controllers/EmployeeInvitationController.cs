@@ -2,6 +2,7 @@
 using Employees.Application.Commands.InviteEmployee;
 using Employees.Domain.Base;
 using Employees.Domain.InvitingEmployee.Result;
+using Employees.Domain.OwnerAggregate;
 using Employees.Infrastructure;
 using KeepTrack.Common;
 using MediatR;
@@ -27,10 +28,11 @@ namespace Employees.Api.Controllers
         [Authorize]
         public async Task<OkObjectResult> Post(InviteEmployeeComand command)
         {
-            var result =  await _mediator.Send<Result<InivtationResultInfo, KeepTrack.Common.Error>>(command);
-            var email = await GetMail(result.Value.MailId);
+            var result =  await _mediator.Send<Result<Employee, KeepTrack.Common.Error>>(command);
+            //var email = await GetMail(result.Value.MailId);
+            var email = "yor invite link";
 
-           return result.Match<OkObjectResult>(x => Ok(new { success = true, email = email, employee = new { name = x.Name, mailId = x.MailId, employeeId = x.EmployeeId } }), x => Ok(new { succes = false, email = "" }));
+           return result.Match<OkObjectResult>(x => Ok(new { success = true, email = email}), x => Ok(new { success = false, email = "" }));
         }
 
 

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Subscription.Application\SubscriptionAndPlan.Application.csproj" />
+    <ProjectReference Include="..\Subscription.Domain\SubscriptionAndPlan.Domain.csproj" />
+    <ProjectReference Include="..\Subscription.Infrastructure\SubscriptionAndPlan.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

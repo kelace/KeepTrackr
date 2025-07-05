@@ -1,14 +1,14 @@
 ﻿using KeepTrack.Common;
 using Microsoft.EntityFrameworkCore;
-using Subscription.Domain.Subscriptions;
-using Subscription.Domain.Users;
+using Subscription.Domain.OwnerAggregate;
+using Subscription.Domain.PricePlanAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Subscription.Infrastructure
+namespace SubscriptionAndPlan.Infrastructure
 {
     public class SubscriptionContext : DbContext
     {
@@ -17,8 +17,9 @@ namespace Subscription.Infrastructure
             Database.Migrate();
         }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<SubscriptionType> SubscriptionTypes { get; set; }
+        public DbSet<Owner> Owners { get; set; }
+        public DbSet<PricePlan> PricePlans { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
 
         private void SeedData(ModelBuilder modelBuilder)
         {

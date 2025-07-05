@@ -40,7 +40,7 @@ const Card = (props: any) => {
                     >
                         <div className="card__text">
 
-                            <p>{ card.name }</p>
+                            <p>{card.name}</p>
                             <MoreHorizontal
                                 className="car__more"
                                 onClick={() => {

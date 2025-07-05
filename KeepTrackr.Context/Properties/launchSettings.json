@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "KeepTrackr.Context": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:53160;http://localhost:53163"
+    }
+  }
+}

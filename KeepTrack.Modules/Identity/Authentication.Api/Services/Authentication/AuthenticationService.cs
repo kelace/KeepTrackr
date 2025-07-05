@@ -48,7 +48,8 @@ namespace Authorization.Api.Services.Authentication
             {
                 new Claim("id", existedUser.Id.ToString()),
                 new Claim("type", role),
-                new Claim("name", user.Name)
+                new Claim("name", user.Name),
+                new Claim("owner", existedUser.OwnerId.ToString()),
             };
 
 

@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Subscription.Application.Commands.SubscribeUser
+namespace SubscriptionAndPlan.Application.Commands.SubscribeUser
 {
     public class SubscribeUserCommand : IRequest
     {
-        public string Type { get; set; }
+        public Guid PlanId { get; set; }
     }
 }

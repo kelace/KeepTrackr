@@ -1,9 +1,6 @@
-﻿using Employees.Application;
-using Employees.Domain;
-using Employees.Domain.InvitingEmployee;
+﻿using Employees.Domain.OwnerAggregate;
 using Employees.Infrastructure;
 using Employees.Infrastructure.Repositories;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Employees.Api.Extensions

@@ -1,4 +1,4 @@
-﻿using Employees.Domain.InvitingEmployee;
+﻿using Employees.Domain.OwnerAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace Employees.Infrastructure
@@ -32,22 +32,22 @@ namespace Employees.Infrastructure
                 x.Ignore(x => x.Events);
             });
 
-            modelBuilder.Entity<Invitation>(x =>
-            {
-                x.Property( x=> x.Id).ValueGeneratedNever();
-            });
+            //modelBuilder.Entity<Invitation>(x =>
+            //{
+            //    x.Property( x=> x.Id).ValueGeneratedNever();
+            //});
 
             modelBuilder.Entity<Employee>(x =>
             {
                 x.Property(x => x.Id).ValueGeneratedNever();
-                x.HasMany(x => x.Companies).WithOne().HasForeignKey(x => x.EmployeeId);
+                //x.HasMany(x => x.Companies).WithOne().HasForeignKey(x => x.EmployeeId);
             });
 
-            modelBuilder.Entity<CompanyItem>(x =>
-            {
-                x.Ignore(x => x.Events);
-                x.ToTable("Employee_Company");
-            });
+            //modelBuilder.Entity<CompanyItem>(x =>
+            //{
+            //    x.Ignore(x => x.Events);
+            //    x.ToTable("Employee_Company");
+            //});
             //modelBuilder.Entity<Employee>().HasOne<Owner>().WithMany(x => x.Employees).HasForeignKey(x => x.OwnerId);
             //modelBuilder.Entity<Employee>().ToTable("Employees");
 

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Subscription.Application.Commands.SubscribeUser;
 using Subscription.Application.Queries.GetAllSubscriptions;
 
-namespace Subscription.Api.Controllers
+namespace SubscriptionAndPlan.Api.Controllers
 {
     [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = "Bearer")]

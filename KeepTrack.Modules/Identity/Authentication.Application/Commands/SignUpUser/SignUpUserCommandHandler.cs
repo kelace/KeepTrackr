@@ -1,4 +1,5 @@
-﻿using Authorization.Entities;
+﻿using Authentication.Entities;
+using Authorization.Entities;
 using Authorization.Messages;
 using KeepTrack.Common;
 using MediatR;
@@ -31,7 +32,6 @@ namespace ApplicationIdentity.Application.Commands.SignUpUser
                 UserName = request.Name,
             };
 
-            var r = WorkerType.Employer.ToString();
             var result = await _userManager.CreateAsync(user, request.Password);
 
             if (!result.Succeeded) return new AuthenticationSignUpResult
@@ -40,7 +40,7 @@ namespace ApplicationIdentity.Application.Commands.SignUpUser
                 Succeeded = false
             };
 
-            var roleResult = await _userManager.AddToRoleAsync(user, r);
+            var roleResult = await _userManager.AddToRoleAsync(user, RoleType.Owner);
 
             if (!roleResult.Succeeded) return new AuthenticationSignUpResult
             {

@@ -3,7 +3,7 @@ using Subscription.Domain.Users;
 using Subscription.Infrastructure;
 using Subscription.Infrastructure.Repositories;
 
-namespace Subscription.Api.Extensions
+namespace SubscriptionAndPlan.Api.Extensions
 {
     public static class AddSubscriptionPartExtension
     {

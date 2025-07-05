@@ -8,11 +8,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\KeepTrack.Common\KeepTrack.Common.csproj" />
-    <ProjectReference Include="..\KeepTrack.Modules\Company\Companies.Infrastructure\Companies.Infrastructure.csproj" />
     <ProjectReference Include="..\KeepTrack.Modules\Employees\Employees.Infrastructure\Employees.Infrastructure.csproj" />
+    <ProjectReference Include="..\KeepTrack.Modules\Executing\Executing.Infrastructure\Executing.Infrastructure.csproj" />
     <ProjectReference Include="..\KeepTrack.Modules\Identity\Authentication.Infastructure\Authentication.Infastructure.csproj" />
-    <ProjectReference Include="..\Subscription.Infrastructure\Subscription.Infrastructure.csproj" />
-    <ProjectReference Include="..\KeepTrack.Modules\Tasks\Task.Infrastructure\TaskManagment.Infrastructure.csproj" />
+    <ProjectReference Include="..\Subscription.Infrastructure\SubscriptionAndPlan.Infrastructure.csproj" />
+    <ProjectReference Include="..\KeepTrack.Modules\Tasks\Task.Infrastructure\Executing.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

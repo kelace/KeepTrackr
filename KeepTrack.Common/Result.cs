@@ -43,4 +43,42 @@ namespace KeepTrack.Common
             return failure(Error!);
         }
     }
+
+    public class Result<TValue, TError, AdditionalInfo>
+    {
+        public readonly TValue? Value;
+        public readonly TError? Error;
+
+        private bool _isSuccess;
+
+        public bool IsSuccess => _isSuccess;
+        public bool IsError => !_isSuccess;
+
+        private Result(TValue value)
+        {
+            _isSuccess = true;
+            Value = value;
+            Error = default;
+        }
+
+        private Result(TError error)
+        {
+            _isSuccess = false;
+            Value = default;
+            Error = error;
+        }
+
+        public static implicit operator Result<TValue, TError, AdditionalInfo>(TValue value) => new Result<TValue, TError, AdditionalInfo>(value);
+
+        public static implicit operator Result<TValue, TError, AdditionalInfo>(TError error) => new Result<TValue, TError, AdditionalInfo>(error);
+
+        public R Match<R>(Func<TValue, R> success, Func<TError, R> failure)
+        {
+            if (_isSuccess)
+            {
+                return success(Value!);
+            }
+            return failure(Error!);
+        }
+    }
 }

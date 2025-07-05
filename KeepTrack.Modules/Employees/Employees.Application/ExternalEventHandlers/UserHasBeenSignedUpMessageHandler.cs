@@ -1,6 +1,7 @@
 ﻿using Authorization.Messages;
 using Employees.Domain;
 using Employees.Domain.InvitingEmployee;
+using Employees.Domain.OwnerAggregate;
 using KeepTrack.Common;
 using MediatR;
 

@@ -9,8 +9,6 @@ import { AppDispatch } from './app/store';
 import { clear } from './features/Employer/subscription/SubscriptionSlice';
 import Layout from './features/layout/Layout';
 
-
-
 function App() {
     const isAuthenticated = useSelector((state: any) => {
         return state.account.isAuthenticated;
@@ -31,7 +29,7 @@ function App() {
 
   return (
       <div className="App">
-          <Layout><Outlet /> </Layout>
+          <Layout><Outlet /></Layout>
     </div>
   );
 }

@@ -1,30 +1,35 @@
 ﻿using Authorization.Messages;
 using MediatR;
-using Subscription.Domain.Users;
+using Subscription.Domain.OwnerAggregate;
+using Subscription.Domain.PricePlanAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Subscription.Application.ExternalHandlers
+namespace SubscriptionAndPlan.Application.ExternalHandlers
 {
     public class UserHasBeenSignedUpEventHandler : INotificationHandler<UserHasBeenSignedUpMessage>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IOwnerRepository _ownerRepository;
+        private readonly IPricePlanRepository _pricePlanRepository;
 
-        public UserHasBeenSignedUpEventHandler(IUserRepository userRepository)
+        public UserHasBeenSignedUpEventHandler(IOwnerRepository ownerRepository, IPricePlanRepository pricePlanRepository)
         {
-            _userRepository = userRepository;
+            _ownerRepository = ownerRepository;
+            _pricePlanRepository = pricePlanRepository;
         }
 
         public async Task Handle(UserHasBeenSignedUpMessage notification, CancellationToken cancellationToken)
         {
-            var user = User.CreateUser(notification.UserId, notification.Name);
+        
+            var plan = await _pricePlanRepository.GetFree();
 
-            user.SubscribeToNormal();
+            var owner = new Owner(notification.UserId, plan.Id);
+            //owner.ChangeSubscriptionPlan(plan.Id);
 
-            await _userRepository.AddAsync(user);
+            await ow.AddAsync(user);
         }
     }
 }
